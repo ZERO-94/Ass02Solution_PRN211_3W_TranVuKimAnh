@@ -22,3 +22,7 @@ D:\C#\Ass02Solution_PRN211_3W_TranVuKimAnh\DataAccess\obj\Debug\net5.0\DataAcces
 D:\C#\Ass02Solution_PRN211_3W_TranVuKimAnh\DataAccess\obj\Debug\net5.0\DataAccess.dll
 D:\C#\Ass02Solution_PRN211_3W_TranVuKimAnh\DataAccess\obj\Debug\net5.0\ref\DataAccess.dll
 D:\C#\Ass02Solution_PRN211_3W_TranVuKimAnh\DataAccess\obj\Debug\net5.0\DataAccess.pdb
+D:\C#\Ass02Solution_PRN211_3W_TranVuKimAnh\DataAccess\bin\Debug\net5.0\appsettings.json
+D:\C#\Ass02Solution_PRN211_3W_TranVuKimAnh\DataAccess\bin\Debug\net5.0\BusinessObject.dll
+D:\C#\Ass02Solution_PRN211_3W_TranVuKimAnh\DataAccess\bin\Debug\net5.0\BusinessObject.pdb
+D:\C#\Ass02Solution_PRN211_3W_TranVuKimAnh\DataAccess\obj\Debug\net5.0\DataAccess.csproj.CopyComplete

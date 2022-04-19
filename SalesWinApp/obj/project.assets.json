@@ -1681,6 +1681,19 @@
         "runtime": {
           "bin/placeholder/BusinessObject.dll": {}
         }
+      },
+      "DataAccess/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v5.0",
+        "dependencies": {
+          "BusinessObject": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/DataAccess.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DataAccess.dll": {}
+        }
       }
     }
   },
@@ -6350,11 +6363,17 @@
       "type": "project",
       "path": "../BusinessObject/BusinessObject.csproj",
       "msbuildProject": "../BusinessObject/BusinessObject.csproj"
+    },
+    "DataAccess/1.0.0": {
+      "type": "project",
+      "path": "../DataAccess/DataAccess.csproj",
+      "msbuildProject": "../DataAccess/DataAccess.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net5.0-windows7.0": [
-      "BusinessObject >= 1.0.0"
+      "BusinessObject >= 1.0.0",
+      "DataAccess >= 1.0.0"
     ]
   },
   "packageFolders": {
@@ -6386,6 +6405,9 @@
           "projectReferences": {
             "D:\\C#\\Ass02Solution_PRN211_3W_TranVuKimAnh\\BusinessObject\\BusinessObject.csproj": {
               "projectPath": "D:\\C#\\Ass02Solution_PRN211_3W_TranVuKimAnh\\BusinessObject\\BusinessObject.csproj"
+            },
+            "D:\\C#\\Ass02Solution_PRN211_3W_TranVuKimAnh\\DataAccess\\DataAccess.csproj": {
+              "projectPath": "D:\\C#\\Ass02Solution_PRN211_3W_TranVuKimAnh\\DataAccess\\DataAccess.csproj"
             }
           }
         }

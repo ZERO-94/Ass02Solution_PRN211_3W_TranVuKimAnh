@@ -1,7 +1,10 @@
-﻿using BusinessObject.Models;
+﻿using BusinessObject;
+using BusinessObject.Models;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -132,10 +135,22 @@ namespace DataAccess
             }
         }
 
-        public Member GetMemberById(int id) => context.Members.SingleOrDefault((m) => m.MemberId == id);
+        public Member GetMemberById(int id) => context.Members.SingleOrDefault<Member>((m) => m.MemberId == id);
 
-        public List<Member> GetAllMembers() => context.Members.ToList();
+        public List<Member> GetAllMembers() => context.Members.ToList<Member>();
 
-        public Member CheckLogin(string email, string password) => context.Members.SingleOrDefault(m => m.Email.Equals(email) && m.Password.Equals(password));
+        public Member CheckLogin(string email, string password) {
+            //get default account
+            using StreamReader streamReader = new StreamReader(Directory.GetCurrentDirectory() + @"\appsettings.json");
+            string json = streamReader.ReadToEnd();
+            Admin admin = JsonConvert.DeserializeObject<Admin>(json);
+
+            if(admin.Email.Equals(email) && admin.Password.Equals(password))
+            {
+                return admin;
+            }
+
+            return context.Members.SingleOrDefault<Member>(m => m.Email.Equals(email) && m.Password.Equals(password));
+        }
     }
 }

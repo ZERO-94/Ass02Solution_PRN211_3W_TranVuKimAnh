@@ -10,7 +10,12 @@
       "ProjectGuid": "541f043b-4ea5-4ea5-9ff4-2071282dd536",
       "DisplayName": "BusinessObject",
       "ColorIndex": 1
+    },
+    "1c6c9e6c-d4bb-4944-a450-1bc384c9d376": {
+      "ProjectGuid": "1c6c9e6c-d4bb-4944-a450-1bc384c9d376",
+      "DisplayName": "SalesWinApp",
+      "ColorIndex": 2
     }
   },
-  "NextColorIndex": 2
+  "NextColorIndex": 3
 }

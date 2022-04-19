@@ -1,4 +1,6 @@
-﻿using BusinessObject.Models;
+﻿using BusinessObject;
+using BusinessObject.Models;
+using DataAccess.repository;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,9 +15,10 @@ namespace SalesWinApp
 {
     public partial class frmLogin : Form
     {
-
+        private IMemberRepository memberRepository;
         public frmLogin()
         {
+            memberRepository = new MemberRepository();
             InitializeComponent();
         }
 
@@ -50,12 +53,33 @@ namespace SalesWinApp
         {
             if(ValidateChildren(ValidationConstraints.Enabled))
             {
+                Member authenticatedUser = memberRepository.CheckLogin(tbEmail.Text, tbPassword.Text);
+                if(authenticatedUser != null)
+                {
+                    //redirect to new screen
+                    RedirectToForm(authenticatedUser);
+                } else
+                {
+                    MessageBox.Show("Invalid account!");
+                }
             }
         }
 
         private void frmLogin_FormClosing(object sender, FormClosingEventArgs e)
         {
             e.Cancel = false;
+        }
+
+        private void RedirectToForm(Member member)
+        {
+            tbEmail.ResetText();
+            tbPassword.ResetText();
+            this.Hide();
+
+            frmMain frmMain = new frmMain(member);
+            this.FormClosed += (s, e) => frmMain.Close();
+            frmMain.FormClosed += (s, e) => this.Close();
+            frmMain.Show();
         }
     }
 }

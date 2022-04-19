@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.repository
 {
-    internal interface IMemberRepository
+    public interface IMemberRepository
     {
         public Member GetMember(int id);
 
