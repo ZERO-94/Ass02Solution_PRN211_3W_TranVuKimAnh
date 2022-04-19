@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "c83304d2-a527-4635-91db-e4d9b5f07ec5": {
+      "ProjectGuid": "c83304d2-a527-4635-91db-e4d9b5f07ec5",
+      "DisplayName": "DataAccess",
+      "ColorIndex": 0
+    },
+    "541f043b-4ea5-4ea5-9ff4-2071282dd536": {
+      "ProjectGuid": "541f043b-4ea5-4ea5-9ff4-2071282dd536",
+      "DisplayName": "BusinessObject",
+      "ColorIndex": 1
+    }
+  },
+  "NextColorIndex": 2
+}
