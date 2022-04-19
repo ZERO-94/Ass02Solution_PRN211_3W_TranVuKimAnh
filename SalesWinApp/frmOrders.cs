@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace SalesWinApp
 {
-    public partial class frmOrders : Form
+    public partial class frmOrders : UserControl
     {
         public frmOrders()
         {

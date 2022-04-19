@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessObject.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,18 @@ namespace DataAccess.repository
 {
     internal interface IMemberRepository
     {
+        public Member GetMember(int id);
+
+        public List<Member> GetAllMembers();
+
+        public bool CreateMember(Member member);
+
+        public bool UpdateMember(int id, Member member);
+
+        public bool DeleteMember(int id);
+
+        public bool ChangePassword(int id, string oldPassword, string newPassword);
+
+        public Member CheckLogin(string email, string password);
     }
 }

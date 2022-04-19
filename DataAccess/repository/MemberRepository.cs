@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BusinessObject.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,28 @@ using System.Threading.Tasks;
 
 namespace DataAccess.repository
 {
-    internal class MemberRepository
+    internal class MemberRepository : IMemberRepository
     {
+
+        private MemberDAO daoInstance;
+
+        public MemberRepository()
+        {
+            daoInstance = MemberDAO.Instance;
+        }
+
+        public bool ChangePassword(int id, string oldPassword, string newPassword) => daoInstance.ChangePassword(id, oldPassword, newPassword);
+
+        public Member CheckLogin(string email, string password) => daoInstance.CheckLogin(email, password);
+
+        public bool CreateMember(Member member) => daoInstance.CreateMember(member);
+
+        public bool DeleteMember(int id) => daoInstance.DeleteMember(id);
+
+        public List<Member> GetAllMembers() => daoInstance.GetAllMembers();
+
+        public Member GetMember(int id) => daoInstance.GetMemberById(id);
+
+        public bool UpdateMember(int id, Member member) => daoInstance.UpdateMember(id, member);
     }
 }
