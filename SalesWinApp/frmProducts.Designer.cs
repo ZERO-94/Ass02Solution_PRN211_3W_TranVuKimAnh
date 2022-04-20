@@ -81,6 +81,7 @@
             this.Controls.Add(this.productDataGrid);
             this.Name = "frmProducts";
             this.Size = new System.Drawing.Size(776, 411);
+            this.Load += new System.EventHandler(this.frmProducts_Load);
             ((System.ComponentModel.ISupportInitialize)(this.productDataGrid)).EndInit();
             this.ResumeLayout(false);
 

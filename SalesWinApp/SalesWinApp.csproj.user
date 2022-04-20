@@ -17,6 +17,9 @@
     <Compile Update="frmOrders.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="frmProductForAdmin.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="frmProducts.cs">
       <SubType>UserControl</SubType>
     </Compile>
