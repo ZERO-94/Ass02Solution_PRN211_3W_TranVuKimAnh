@@ -9,7 +9,7 @@ namespace DataAccess.repository
 {
     public interface IMemberRepository
     {
-        public Member GetMember(int id);
+        public Member GetMemberById(int id);
 
         public List<Member> GetAllMembers();
 

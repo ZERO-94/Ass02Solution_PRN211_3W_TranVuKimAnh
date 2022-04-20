@@ -43,6 +43,7 @@
             this.createMember.TabIndex = 7;
             this.createMember.Text = "create member";
             this.createMember.UseVisualStyleBackColor = true;
+            this.createMember.Click += new System.EventHandler(this.createMember_Click);
             // 
             // deleteMember
             // 
@@ -52,6 +53,7 @@
             this.deleteMember.TabIndex = 6;
             this.deleteMember.Text = "delete";
             this.deleteMember.UseVisualStyleBackColor = true;
+            this.deleteMember.Click += new System.EventHandler(this.deleteMember_Click);
             // 
             // updateMember
             // 
@@ -61,12 +63,17 @@
             this.updateMember.TabIndex = 5;
             this.updateMember.Text = "update";
             this.updateMember.UseVisualStyleBackColor = true;
+            this.updateMember.Click += new System.EventHandler(this.updateMember_Click);
             // 
             // memberDataGrid
             // 
+            this.memberDataGrid.AllowUserToAddRows = false;
+            this.memberDataGrid.AllowUserToDeleteRows = false;
             this.memberDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.memberDataGrid.Location = new System.Drawing.Point(26, 114);
+            this.memberDataGrid.MultiSelect = false;
             this.memberDataGrid.Name = "memberDataGrid";
+            this.memberDataGrid.ReadOnly = true;
             this.memberDataGrid.RowTemplate.Height = 25;
             this.memberDataGrid.Size = new System.Drawing.Size(600, 250);
             this.memberDataGrid.TabIndex = 4;
@@ -81,6 +88,7 @@
             this.Controls.Add(this.memberDataGrid);
             this.Name = "frmMembers";
             this.Size = new System.Drawing.Size(776, 411);
+            this.Load += new System.EventHandler(this.frmMembers_Load);
             ((System.ComponentModel.ISupportInitialize)(this.memberDataGrid)).EndInit();
             this.ResumeLayout(false);
 
