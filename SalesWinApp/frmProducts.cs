@@ -37,6 +37,7 @@ namespace SalesWinApp
             productTable.Columns.Add("ID");
             productTable.Columns.Add("Category");
             productTable.Columns.Add("Product Name");
+            productTable.Columns.Add("Weight");
             productTable.Columns.Add("Unit Price");
             productTable.Columns.Add("Unit in Stock");
 
@@ -49,7 +50,7 @@ namespace SalesWinApp
             foreach (Product product in productsAfterFilter)
             {
                 int productCategory = (int)product.CategoryId;
-                productTable.Rows.Add(product.ProductId, categoryRepository.GetCategoryById(productCategory).CategoryName, product.ProductName, product.UnitPrice, product.UnitsInStock);
+                productTable.Rows.Add(product.ProductId, categoryRepository.GetCategoryById(productCategory).CategoryName, product.ProductName, product.Weight, product.UnitPrice, product.UnitsInStock);
             }
 
             productDataGrid.DataSource = productTable;

@@ -39,7 +39,7 @@ namespace SalesWinApp
 
                 newProduct = new Product()
                 {
-                    Category = categoryRepository.GetCategoryById(categoryId),
+                    CategoryId = categoryRepository.GetCategoryById(categoryId).CategoryId,
                     ProductName = tbName.Text.Trim(),
                     Weight = tbWeight.Text.Trim(),
                     UnitPrice = decimal.Parse(tbUnitPrice.Text.Trim()),
@@ -219,7 +219,7 @@ namespace SalesWinApp
 
                 //load data
                 tbId.Text = product.ProductId.ToString();
-                cbCategory.SelectedValue = product.Category.CategoryId.ToString();
+                cbCategory.SelectedItem = categoryRepository.GetCategoryById((int)product.CategoryId);
                 tbName.Text = product.ProductName;
                 tbWeight.Text = product.Weight;
                 tbUnitPrice.Text = product.UnitPrice.ToString();

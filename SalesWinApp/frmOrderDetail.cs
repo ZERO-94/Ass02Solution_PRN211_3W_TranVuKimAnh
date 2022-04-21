@@ -149,7 +149,7 @@ namespace SalesWinApp
 
                 //load data
                 tbId.Text = order.OrderId.ToString();
-                cbMember.SelectedValue = order.Member.MemberId.ToString();
+                cbMember.SelectedItem = memberRepository.GetMemberById((int)order.MemberId);
                 dtpOrderDate.Value = order.OrderDate;
                 dtpRequiredDate.Value = (DateTime)order.RequiredDate;
                 dtpShippedDate.Value = (DateTime)order.ShippedDate;
