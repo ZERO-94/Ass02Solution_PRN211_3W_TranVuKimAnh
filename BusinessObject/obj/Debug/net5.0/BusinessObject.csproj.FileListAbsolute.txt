@@ -27,3 +27,4 @@ D:\C#\Ass02Solution_PRN211_3W_TranVuKimAnh\BusinessObject\obj\Debug\net5.0\Busin
 D:\C#\Ass02Solution_PRN211_3W_TranVuKimAnh\BusinessObject\obj\Debug\net5.0\ref\BusinessObject.dll
 D:\C#\Ass02Solution_PRN211_3W_TranVuKimAnh\BusinessObject\obj\Debug\net5.0\BusinessObject.pdb
 D:\C#\Ass02Solution_PRN211_3W_TranVuKimAnh\BusinessObject\obj\Debug\net5.0\BusinessObject.genruntimeconfig.cache
+D:\C#\Ass02Solution_PRN211_3W_TranVuKimAnh\BusinessObject\obj\Debug\net5.0\BusinessObject.csproj.AssemblyReference.cache

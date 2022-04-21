@@ -17,6 +17,7 @@ namespace SalesWinApp
     {
         private Admin admin;
         private IProductRepository productRepository;
+        private ICategoryRepository categoryRepository;
         private frmLogin loginForm;
 
         public frmProducts()
@@ -24,6 +25,7 @@ namespace SalesWinApp
             this.admin = admin;
             this.loginForm = loginForm;
             productRepository = new ProductRepository();
+            categoryRepository = new CategoryRepository();
             InitializeComponent();
         }
 
@@ -46,7 +48,8 @@ namespace SalesWinApp
 
             foreach (Product product in productsAfterFilter)
             {
-                productTable.Rows.Add(product.ProductId, product.CategoryId, product.ProductName, product.UnitPrice, product.UnitsInStock);
+                int productCategory = (int)product.CategoryId;
+                productTable.Rows.Add(product.ProductId, categoryRepository.GetCategoryById(productCategory).CategoryName, product.ProductName, product.UnitPrice, product.UnitsInStock);
             }
 
             productDataGrid.DataSource = productTable;

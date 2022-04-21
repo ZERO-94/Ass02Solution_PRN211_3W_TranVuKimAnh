@@ -43,6 +43,7 @@
             this.createProduct.TabIndex = 11;
             this.createProduct.Text = "create product";
             this.createProduct.UseVisualStyleBackColor = true;
+            this.createProduct.Click += new System.EventHandler(this.createProduct_Click);
             // 
             // deleteProduct
             // 
@@ -52,6 +53,7 @@
             this.deleteProduct.TabIndex = 10;
             this.deleteProduct.Text = "delete";
             this.deleteProduct.UseVisualStyleBackColor = true;
+            this.deleteProduct.Click += new System.EventHandler(this.deleteProduct_Click);
             // 
             // updateProduct
             // 
@@ -61,12 +63,17 @@
             this.updateProduct.TabIndex = 9;
             this.updateProduct.Text = "update";
             this.updateProduct.UseVisualStyleBackColor = true;
+            this.updateProduct.Click += new System.EventHandler(this.updateProduct_Click);
             // 
             // productDataGrid
             // 
+            this.productDataGrid.AllowUserToAddRows = false;
+            this.productDataGrid.AllowUserToDeleteRows = false;
             this.productDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.productDataGrid.Location = new System.Drawing.Point(26, 114);
+            this.productDataGrid.MultiSelect = false;
             this.productDataGrid.Name = "productDataGrid";
+            this.productDataGrid.ReadOnly = true;
             this.productDataGrid.RowTemplate.Height = 25;
             this.productDataGrid.Size = new System.Drawing.Size(600, 250);
             this.productDataGrid.TabIndex = 8;

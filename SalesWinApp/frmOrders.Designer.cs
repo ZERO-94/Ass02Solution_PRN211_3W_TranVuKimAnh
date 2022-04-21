@@ -52,6 +52,7 @@
             this.updateOrder.TabIndex = 1;
             this.updateOrder.Text = "update";
             this.updateOrder.UseVisualStyleBackColor = true;
+            this.updateOrder.Click += new System.EventHandler(this.updateOrder_Click);
             // 
             // deleteOrder
             // 
@@ -61,6 +62,7 @@
             this.deleteOrder.TabIndex = 2;
             this.deleteOrder.Text = "delete";
             this.deleteOrder.UseVisualStyleBackColor = true;
+            this.deleteOrder.Click += new System.EventHandler(this.deleteOrder_Click);
             // 
             // createOrder
             // 
@@ -70,6 +72,7 @@
             this.createOrder.TabIndex = 3;
             this.createOrder.Text = "create order";
             this.createOrder.UseVisualStyleBackColor = true;
+            this.createOrder.Click += new System.EventHandler(this.createOrder_Click);
             // 
             // frmOrders
             // 
@@ -81,6 +84,7 @@
             this.Controls.Add(this.orderDataGrid);
             this.Name = "frmOrders";
             this.Size = new System.Drawing.Size(776, 411);
+            this.Load += new System.EventHandler(this.frmOrders_Load);
             ((System.ComponentModel.ISupportInitialize)(this.orderDataGrid)).EndInit();
             this.ResumeLayout(false);
 
