@@ -16,34 +16,16 @@ namespace DataAccess
 
         private static MemberDAO instance;
         private static readonly object instanceLock = new object();
-        private AssignmentPRN211DBContext context;
+        private AssignmentPRN211DBContext context = new AssignmentPRN211DBContext();
 
         //Use singleton design pattern
-        private MemberDAO()
+        public MemberDAO()
         {
-        }
 
-        public static MemberDAO Instance
-        {
-            get
-            {
-                lock (instanceLock)
-                {
-                    if (instance == null)
-                    {
-                        instance = new MemberDAO();
-                    }
-
-                    return instance;
-                }
-
-            }
         }
 
         public bool CreateMember(Member newMember)
         {
-            using(context = new AssignmentPRN211DBContext())
-            {
                 try
                 {
                     context.Members.Add(newMember);
@@ -58,13 +40,10 @@ namespace DataAccess
                 {
                     return false;
                 }
-            }
         }
 
         public bool DeleteMember(int id)
         {
-            using(context = new AssignmentPRN211DBContext())
-            {
                 try
                 {
                     Member deleteMember = GetMemberById(id);
@@ -87,13 +66,10 @@ namespace DataAccess
                 {
                     return false;
                 }
-            }
         }
 
         public bool UpdateMember(int id, Member updatedMemberInfo)
         {
-            using(context = new AssignmentPRN211DBContext())
-            {
                 try
                 {
                     Member updateMember = GetMemberById(id);
@@ -116,13 +92,10 @@ namespace DataAccess
                 {
                     return false;
                 }
-            }
         }
 
         public bool ChangePassword(int id, string oldPassword, string newPassword)
         {
-            using(context=new AssignmentPRN211DBContext())
-            {
                 try
                 {
                     Member updateMember = GetMemberById(id);
@@ -146,29 +119,20 @@ namespace DataAccess
                 {
                     return false;
                 }
-            }
         }
 
         public Member GetMemberById(int id)
         {
-            using(context = new AssignmentPRN211DBContext())
-            {
                 return context.Members.SingleOrDefault<Member>((m) => m.MemberId == id);
-            }
         }
 
         public List<Member> GetAllMembers()
         {
-            using(context = new AssignmentPRN211DBContext())
-            {
                 return context.Members.ToList<Member>();
-            }
         }
 
         public Member CheckLogin(string email, string password) {
             
-            using(context = new AssignmentPRN211DBContext())
-            {
                 //get default account
                 using StreamReader streamReader = new StreamReader(Directory.GetCurrentDirectory() + @"\appsettings.json");
                 string json = streamReader.ReadToEnd();
@@ -180,7 +144,6 @@ namespace DataAccess
                 }
 
                 return context.Members.SingleOrDefault<Member>(m => m.Email.Equals(email) && m.Password.Equals(password));
-            }
 
         }
     }

@@ -31,31 +31,38 @@ namespace SalesWinApp
 
         public Product GetProductObject()
         {
-            Product newProduct = null;
             if (ValidateChildren(ValidationConstraints.Enabled))
             {
 
                 int categoryId = int.Parse(cbCategory.SelectedValue.ToString());
 
-                newProduct = new Product()
-                {
-                    CategoryId = categoryRepository.GetCategoryById(categoryId).CategoryId,
-                    ProductName = tbName.Text.Trim(),
-                    Weight = tbWeight.Text.Trim(),
-                    UnitPrice = decimal.Parse(tbUnitPrice.Text.Trim()),
-                    UnitsInStock = int.Parse(tbUnitInStock.Text.Trim())
-                };
-
                 if (operationType.Equals("create"))
                 {
-                    newProduct.ProductId = int.Parse(tbId.Text.Trim());
+                    Product newProduct = new Product()
+                    {
+                        ProductId = int.Parse(tbId.Text.Trim()),
+                        CategoryId = categoryRepository.GetCategoryById(categoryId).CategoryId,
+                        ProductName = tbName.Text.Trim(),
+                        Weight = tbWeight.Text.Trim(),
+                        UnitPrice = decimal.Parse(tbUnitPrice.Text.Trim()),
+                        UnitsInStock = int.Parse(tbUnitInStock.Text.Trim())
+                    };
+
+                    return newProduct;
                 }
                 else if (operationType.Equals("update"))
                 {
-                    newProduct.ProductId = product.ProductId;
-                }
+                    product.CategoryId = categoryRepository.GetCategoryById(categoryId).CategoryId;
+                    product.ProductName = tbName.Text.Trim();
+                    product.Weight = tbWeight.Text.Trim();
+                    product.UnitPrice = decimal.Parse(tbUnitPrice.Text.Trim());
+                    product.UnitsInStock = int.Parse(tbUnitInStock.Text.Trim());
 
-                return newProduct;
+                    return product;
+                } else
+                {
+                    return null;
+                }
             }
 
             return null;

@@ -24,7 +24,7 @@ namespace DataAccess
         {
                 try
                 {
-                    context.Entry(newProduct).State = EntityState.Added;
+                    context.Products.Add(newProduct);
                     context.SaveChanges();
                     return true;
                 }
@@ -42,17 +42,9 @@ namespace DataAccess
         {
                 try
                 {
-                    Product deleteProduct = GetProductById(id);
-                    if (deleteProduct != null)
-                    {
-                        context.Entry(deleteProduct).State = EntityState.Deleted;
-                        context.SaveChanges();
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    context.Products.Remove(GetProductById(id));
+                    context.SaveChanges();
+                    return true;
                 }
                 catch (DbUpdateConcurrencyException ex)
                 {
@@ -68,17 +60,9 @@ namespace DataAccess
         {
                 try
                 {
-                    Product updateProduct = GetProductById(id);
-                    if (updateProduct != null)
-                    {
-                        context.Entry(updatedProductInfo).State = EntityState.Modified;
-                        context.SaveChanges();
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    context.Products.Update(updatedProductInfo);
+                    context.SaveChanges();
+                    return true;
                 }
                 catch (DbUpdateConcurrencyException ex)
                 {
@@ -92,17 +76,17 @@ namespace DataAccess
 
         public Product GetProductById(int id)
         {
-                return context.Products.AsNoTracking().SingleOrDefault<Product>((m) => m.ProductId == id);
+                return context.Products.SingleOrDefault<Product>((m) => m.ProductId == id);
         }
 
         public List<Product> GetAllProducts()
         {
-                return context.Products.AsNoTracking().ToList<Product>();
+                return context.Products.ToList<Product>();
         }
 
         public List<Product> SearchProduct(int? searchId, string? searchName, decimal? searchPrice, int? searchInStock)
         {
-                return context.Products.AsNoTracking().Where(product => searchId != null || product.ProductId == searchId)
+                return context.Products.Where(product => searchId != null || product.ProductId == searchId)
                 .Where(product => searchName == null || product.ProductName.Contains(searchName))
                 .Where(product => searchPrice == null || product.UnitPrice == searchPrice)
                 .Where(product => searchInStock == null || product.UnitsInStock == searchInStock)

@@ -14,7 +14,7 @@ namespace DataAccess.repository
 
         public MemberRepository()
         {
-            daoInstance = MemberDAO.Instance;
+            daoInstance = new MemberDAO();
         }
 
         public bool ChangePassword(int id, string oldPassword, string newPassword) => daoInstance.ChangePassword(id, oldPassword, newPassword);
