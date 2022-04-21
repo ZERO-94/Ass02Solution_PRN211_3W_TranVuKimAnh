@@ -26,6 +26,9 @@
     <Compile Update="frmProducts.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="frmProductToOrder.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="frmProfile.cs">
       <SubType>UserControl</SubType>
     </Compile>

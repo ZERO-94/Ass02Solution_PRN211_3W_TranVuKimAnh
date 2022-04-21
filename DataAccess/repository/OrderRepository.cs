@@ -10,7 +10,7 @@ namespace DataAccess.repository
     public class OrderRepository : IOrderRepository
     {
 
-        private OrderDAO daoInstance = OrderDAO.Instance;
+        private OrderDAO daoInstance = new OrderDAO();
 
         public bool CreateOrder(Order newOrder) => daoInstance.CreateOrder(newOrder);
 

@@ -29,30 +29,36 @@ namespace SalesWinApp
 
         public Member GetMemberObject()
         {
-            Member newMember = null;
             if (ValidateChildren(ValidationConstraints.Enabled))
             {
 
-                newMember = new Member()
-                {
-                    CompanyName = tbCompanyName.Text.Trim(),
-                    Email = tbEmail.Text.Trim(),
-                    City = tbCity.Text.Trim(),
-                    Country = tbCountry.Text.Trim()
-                };
+                
 
                 if (operationType.Equals("create"))
                 {
-                    newMember.MemberId = int.Parse(tbId.Text.Trim());
-                    newMember.Password = tbPassword.Text.Trim();
+                    Member newMember = new Member()
+                    {
+                        CompanyName = tbCompanyName.Text.Trim(),
+                        Email = tbEmail.Text.Trim(),
+                        City = tbCity.Text.Trim(),
+                        Country = tbCountry.Text.Trim(),
+                        MemberId = int.Parse(tbId.Text.Trim()),
+                        Password = tbPassword.Text.Trim()
+                    };
+                    return newMember;
                 }
                 else if (operationType.Equals("update"))
                 {
-                    newMember.MemberId = member.MemberId;
-                    newMember.Password = tbPassword.Text.Trim();
-                }
+                    member.CompanyName = tbCompanyName.Text.Trim();
+                    member.Email = tbEmail.Text.Trim();
+                    member.City = tbCity.Text.Trim();
+                    member.Country = tbCountry.Text.Trim();
 
-                return newMember;
+                    return member;
+                } else
+                {
+                    return null;
+                }
             }
 
             return null;

@@ -12,34 +12,16 @@ namespace DataAccess
     {
         private static OrderDAO instance;
         private static readonly object instanceLock = new object();
-        private AssignmentPRN211DBContext context;
+        private AssignmentPRN211DBContext context = new AssignmentPRN211DBContext();
 
         //Use singleton design pattern
-        private OrderDAO()
+        public OrderDAO()
         {
-        }
 
-        public static OrderDAO Instance
-        {
-            get
-            {
-                lock (instanceLock)
-                {
-                    if (instance == null)
-                    {
-                        instance = new OrderDAO();
-                    }
-
-                    return instance;
-                }
-
-            }
         }
 
         public bool CreateOrder(Order newOrder)
         {
-            using(context = new AssignmentPRN211DBContext())
-            {
                 try
                 {
                     context.Orders.Add(newOrder);
@@ -54,13 +36,10 @@ namespace DataAccess
                 {
                     return false;
                 }
-            }
         }
 
         public bool DeleteOrder(int id)
         {
-            using(context=new AssignmentPRN211DBContext())
-            {
                 try
                 {
                     Order deleteOrder = GetOrderById(id);
@@ -83,13 +62,10 @@ namespace DataAccess
                 {
                     return false;
                 }
-            }
         }
 
         public bool UpdateOrder(int id, Order updatedOrderInfo)
         {
-            using(context = new AssignmentPRN211DBContext())
-            {
                 try
                 {
                     Order updateOrder = GetOrderById(id);
@@ -112,39 +88,26 @@ namespace DataAccess
                 {
                     return false;
                 }
-            }
         }
 
         public Order GetOrderById(int id)
         {
-            using(context = new AssignmentPRN211DBContext())
-            {
-                return context.Orders.SingleOrDefault<Order>((m) => m.OrderId == id);
-            }
+                return context.Orders.Include(order => order.OrderDetails).ThenInclude(orderDetail => orderDetail.Product).SingleOrDefault<Order>((m) => m.OrderId == id);
         }
 
         public List<Order> GetOrderByMemberId(int memberId)
         {
-            using(context=new AssignmentPRN211DBContext())
-            {
-                return context.Orders.Where<Order>((m) => m.MemberId == memberId).ToList();
-            }
+                return context.Orders.Include(order => order.OrderDetails).ThenInclude(orderDetail => orderDetail.Product).Where<Order>((m) => m.MemberId == memberId).ToList();
         }
 
         public List<Order> GetOrderByDateRange(DateTime startDate, DateTime endDate)
         {
-            using(context = new AssignmentPRN211DBContext())
-            {
-                return context.Orders.Where<Order>((m) => m.OrderDate >= startDate && m.OrderDate <= endDate).ToList();
-            }
+                return context.Orders.Include(order => order.OrderDetails).ThenInclude(orderDetail => orderDetail.Product).Where<Order>((m) => m.OrderDate >= startDate && m.OrderDate <= endDate).ToList();
         }
 
         public List<Order> GetAllOrders()
         {
-            using(context = new AssignmentPRN211DBContext())
-            {
-                return context.Orders.ToList<Order>();
-            }
+                return context.Orders.Include(order => order.OrderDetails).ThenInclude(orderDetail => orderDetail.Product).ToList<Order>();
         }
     }
 }

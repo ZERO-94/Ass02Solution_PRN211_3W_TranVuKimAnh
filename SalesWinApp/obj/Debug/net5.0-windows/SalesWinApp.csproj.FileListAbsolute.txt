@@ -65,3 +65,4 @@ D:\C#\Ass02Solution_PRN211_3W_TranVuKimAnh\SalesWinApp\obj\Debug\net5.0-windows\
 D:\C#\Ass02Solution_PRN211_3W_TranVuKimAnh\SalesWinApp\obj\Debug\net5.0-windows\SalesWinApp.frmMemberForAdmin.resources
 D:\C#\Ass02Solution_PRN211_3W_TranVuKimAnh\SalesWinApp\obj\Debug\net5.0-windows\SalesWinApp.frmProductForAdmin.resources
 D:\C#\Ass02Solution_PRN211_3W_TranVuKimAnh\SalesWinApp\obj\Debug\net5.0-windows\SalesWinApp.frmOrderDetail.resources
+D:\C#\Ass02Solution_PRN211_3W_TranVuKimAnh\SalesWinApp\obj\Debug\net5.0-windows\SalesWinApp.frmProductToOrder.resources

@@ -35,19 +35,19 @@
             this.tbId = new System.Windows.Forms.TextBox();
             this.btnOK = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lbMember = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.dtpOrderDate = new System.Windows.Forms.DateTimePicker();
             this.dtpRequiredDate = new System.Windows.Forms.DateTimePicker();
             this.dtpShippedDate = new System.Windows.Forms.DateTimePicker();
-            this.orderProductDataGrid = new System.Windows.Forms.DataGridView();
+            this.orderDetailDataGrid = new System.Windows.Forms.DataGridView();
             this.addProduct = new System.Windows.Forms.Button();
             this.removeProduct = new System.Windows.Forms.Button();
             this.updateProduct = new System.Windows.Forms.Button();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.orderProductDataGrid)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.orderDetailDataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -93,6 +93,7 @@
             this.btnOK.TabIndex = 52;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
+            this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // label2
             // 
@@ -103,14 +104,14 @@
             this.label2.TabIndex = 49;
             this.label2.Text = "Order date";
             // 
-            // label1
+            // lbMember
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(490, 51);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(52, 15);
-            this.label1.TabIndex = 48;
-            this.label1.Text = "Member";
+            this.lbMember.AutoSize = true;
+            this.lbMember.Location = new System.Drawing.Point(490, 51);
+            this.lbMember.Name = "lbMember";
+            this.lbMember.Size = new System.Drawing.Size(52, 15);
+            this.lbMember.TabIndex = 48;
+            this.lbMember.Text = "Member";
             // 
             // btnCancel
             // 
@@ -121,6 +122,7 @@
             this.btnCancel.TabIndex = 47;
             this.btnCancel.Text = "cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // label3
             // 
@@ -161,14 +163,14 @@
             this.dtpShippedDate.Size = new System.Drawing.Size(200, 23);
             this.dtpShippedDate.TabIndex = 65;
             // 
-            // orderProductDataGrid
+            // orderDetailDataGrid
             // 
-            this.orderProductDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.orderProductDataGrid.Location = new System.Drawing.Point(53, 194);
-            this.orderProductDataGrid.Name = "orderProductDataGrid";
-            this.orderProductDataGrid.RowTemplate.Height = 25;
-            this.orderProductDataGrid.Size = new System.Drawing.Size(685, 262);
-            this.orderProductDataGrid.TabIndex = 66;
+            this.orderDetailDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.orderDetailDataGrid.Location = new System.Drawing.Point(53, 194);
+            this.orderDetailDataGrid.Name = "orderDetailDataGrid";
+            this.orderDetailDataGrid.RowTemplate.Height = 25;
+            this.orderDetailDataGrid.Size = new System.Drawing.Size(685, 262);
+            this.orderDetailDataGrid.TabIndex = 66;
             // 
             // addProduct
             // 
@@ -178,6 +180,7 @@
             this.addProduct.TabIndex = 67;
             this.addProduct.Text = "Add";
             this.addProduct.UseVisualStyleBackColor = true;
+            this.addProduct.Click += new System.EventHandler(this.addProduct_Click);
             // 
             // removeProduct
             // 
@@ -187,6 +190,7 @@
             this.removeProduct.TabIndex = 68;
             this.removeProduct.Text = "Remove";
             this.removeProduct.UseVisualStyleBackColor = true;
+            this.removeProduct.Click += new System.EventHandler(this.removeProduct_Click);
             // 
             // updateProduct
             // 
@@ -196,6 +200,7 @@
             this.updateProduct.TabIndex = 69;
             this.updateProduct.Text = "Update";
             this.updateProduct.UseVisualStyleBackColor = true;
+            this.updateProduct.Click += new System.EventHandler(this.updateProduct_Click);
             // 
             // errorProvider1
             // 
@@ -209,7 +214,7 @@
             this.Controls.Add(this.updateProduct);
             this.Controls.Add(this.removeProduct);
             this.Controls.Add(this.addProduct);
-            this.Controls.Add(this.orderProductDataGrid);
+            this.Controls.Add(this.orderDetailDataGrid);
             this.Controls.Add(this.dtpShippedDate);
             this.Controls.Add(this.dtpRequiredDate);
             this.Controls.Add(this.dtpOrderDate);
@@ -221,11 +226,12 @@
             this.Controls.Add(this.tbId);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lbMember);
             this.Controls.Add(this.btnCancel);
             this.Name = "frmOrderDetail";
             this.Text = "frmOrderDetail";
-            ((System.ComponentModel.ISupportInitialize)(this.orderProductDataGrid)).EndInit();
+            this.Load += new System.EventHandler(this.frmOrderDetail_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.orderDetailDataGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -240,14 +246,14 @@
         private System.Windows.Forms.TextBox tbId;
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lbMember;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.DateTimePicker dtpOrderDate;
         private System.Windows.Forms.DateTimePicker dtpRequiredDate;
         private System.Windows.Forms.DateTimePicker dtpShippedDate;
-        private System.Windows.Forms.DataGridView orderProductDataGrid;
+        private System.Windows.Forms.DataGridView orderDetailDataGrid;
         private System.Windows.Forms.Button addProduct;
         private System.Windows.Forms.Button removeProduct;
         private System.Windows.Forms.Button updateProduct;

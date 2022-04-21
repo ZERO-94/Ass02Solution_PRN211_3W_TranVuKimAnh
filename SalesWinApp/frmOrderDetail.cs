@@ -33,31 +33,34 @@ namespace SalesWinApp
 
         public Order GetOrderObject()
         {
-            Order newOrder = null;
             if (ValidateChildren(ValidationConstraints.Enabled))
             {
 
-                newOrder = new Order()
-                {
-                    OrderDate = dtpOrderDate.Value,
-                    ShippedDate = dtpShippedDate.Value,
-                    RequiredDate = dtpRequiredDate.Value
-                };
-
-                //TODO: get all product later
-
                 if (operationType.Equals("create"))
                 {
-                    newOrder.OrderId = int.Parse(tbId.Text.Trim());
-                    newOrder.MemberId = int.Parse(cbMember.SelectedValue.ToString());
+                    Order newOrder = new Order()
+                    {
+                        OrderId = int.Parse(tbId.Text.Trim()),
+                        MemberId = int.Parse(cbMember.SelectedValue.ToString()),
+                        OrderDate = dtpOrderDate.Value,
+                        ShippedDate = dtpShippedDate.Value,
+                        RequiredDate = dtpRequiredDate.Value
+                    };
+
+                    return newOrder;
+                    
                 }
                 else if (operationType.Equals("update"))
                 {
-                    newOrder.OrderId = order.OrderId;
-                    newOrder.OrderId = (int)order.MemberId;
-                }
+                    order.OrderDate = dtpOrderDate.Value;
+                    order.ShippedDate = dtpShippedDate.Value;
+                    order.RequiredDate = dtpRequiredDate.Value;
 
-                return newOrder;
+                    return order;
+                } else
+                {
+                    return null;
+                }
             }
 
             return null;
@@ -139,6 +142,7 @@ namespace SalesWinApp
             {
                 //show all
                 lbOperation.Text = "Create new order";
+                order = new Order();
             }
             else if (operationType.Equals("update"))
             {
@@ -146,6 +150,8 @@ namespace SalesWinApp
                 lbOperation.Text = "Update order with ID: " + order.OrderId;
                 tbId.Hide();
                 lbId.Hide();
+                cbMember.Hide();
+                lbMember.Hide();
 
                 //load data
                 tbId.Text = order.OrderId.ToString();
@@ -153,6 +159,106 @@ namespace SalesWinApp
                 dtpOrderDate.Value = order.OrderDate;
                 dtpRequiredDate.Value = (DateTime)order.RequiredDate;
                 dtpShippedDate.Value = (DateTime)order.ShippedDate;
+
+                //load order detail
+                orderDetailDataGrid.DataSource = order.OrderDetails.ToList();
+                orderDetailDataGrid.Columns[6].Visible = false;
+                orderDetailDataGrid.Columns[5].Visible = false;
+                orderDetailDataGrid.Columns[4].Visible = false;
+                orderDetailDataGrid.Columns[0].Visible = false;
+            }
+        }
+
+        private void addProduct_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                frmProductToOrder frmProductToOrder = new frmProductToOrder("create", null);
+
+                if (frmProductToOrder.ShowDialog() == DialogResult.OK)
+                {
+                    //create member
+                    OrderDetail orderDetailObject = frmProductToOrder.GetOrderDetailObject();
+
+                    orderDetailObject.OrderId = order.OrderId;
+
+                    order.OrderDetails.Add(orderDetailObject);
+                }
+            }
+            finally
+            {
+                //load order detail
+                orderDetailDataGrid.DataSource = order.OrderDetails.ToList();
+                orderDetailDataGrid.Columns[4].Visible = false;
+            }
+        }
+
+        private void removeProduct_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int deleteId = (int)orderDetailDataGrid.Rows[orderDetailDataGrid.CurrentCell.RowIndex].Cells[1].Value;
+
+                if (deleteId != null)
+                {
+                    order.OrderDetails.Remove(
+                        order.OrderDetails.FirstOrDefault(x => x.ProductId == deleteId)
+                        );
+                }
+                else
+                {
+                    MessageBox.Show("There is problem, try again!");
+                }
+            }
+            finally
+            {
+                //load order detail
+                orderDetailDataGrid.DataSource = order.OrderDetails.ToList();
+            }
+        }
+
+        private void updateProduct_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int updateId = (int)orderDetailDataGrid.Rows[orderDetailDataGrid.CurrentCell.RowIndex].Cells[1].Value;
+
+                if (updateId != null)
+                {
+                    OrderDetail updateOrder = order.OrderDetails.FirstOrDefault(x => x.ProductId == updateId);
+                    if (updateOrder != null)
+                    {
+                        try
+                        {
+                            frmProductToOrder frmProductToOrder = new frmProductToOrder("update", updateOrder);
+
+                            if (frmProductToOrder.ShowDialog() == DialogResult.OK)
+                            {
+                                //create member
+                                OrderDetail orderDetailObject = frmProductToOrder.GetOrderDetailObject();
+
+                                orderDetailObject.OrderId = order.OrderId;
+
+                                order.OrderDetails.Add(orderDetailObject);
+                            }
+                        }
+                        finally
+                        {
+                            //load order detail
+                            orderDetailDataGrid.DataSource = order.OrderDetails.ToList();
+                            orderDetailDataGrid.Columns[4].Visible = false;
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("There is problem, try again!");
+                }
+            }
+            finally
+            {
+                //load order detail
+                orderDetailDataGrid.DataSource = order.OrderDetails.ToList();
             }
         }
     }
