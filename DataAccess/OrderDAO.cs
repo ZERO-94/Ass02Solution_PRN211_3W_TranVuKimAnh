@@ -12,8 +12,7 @@ namespace DataAccess
     {
         private static OrderDAO instance;
         private static readonly object instanceLock = new object();
-        private AssignmentPRN211DBContext context = new AssignmentPRN211DBContext();
-        private int? memberId;
+        private AssignmentPRN211DBContext context;
 
         //Use singleton design pattern
         private OrderDAO()
@@ -39,80 +38,113 @@ namespace DataAccess
 
         public bool CreateOrder(Order newOrder)
         {
-            try
+            using(context = new AssignmentPRN211DBContext())
             {
-                context.Orders.Add(newOrder);
-                context.SaveChanges();
-                return true;
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return false;
-            }
-            catch (DbUpdateException ex)
-            {
-                return false;
+                try
+                {
+                    context.Orders.Add(newOrder);
+                    context.SaveChanges();
+                    return true;
+                }
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    return false;
+                }
+                catch (DbUpdateException ex)
+                {
+                    return false;
+                }
             }
         }
 
         public bool DeleteOrder(int id)
         {
-            try
+            using(context=new AssignmentPRN211DBContext())
             {
-                Order deleteOrder = GetOrderById(id);
-                if (deleteOrder != null)
+                try
                 {
-                    context.Orders.Remove(deleteOrder);
-                    context.SaveChanges();
-                    return true;
+                    Order deleteOrder = GetOrderById(id);
+                    if (deleteOrder != null)
+                    {
+                        context.Orders.Remove(deleteOrder);
+                        context.SaveChanges();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
-                else
+                catch (DbUpdateConcurrencyException ex)
                 {
                     return false;
                 }
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return false;
-            }
-            catch (DbUpdateException ex)
-            {
-                return false;
+                catch (DbUpdateException ex)
+                {
+                    return false;
+                }
             }
         }
 
         public bool UpdateOrder(int id, Order updatedOrderInfo)
         {
-            try
+            using(context = new AssignmentPRN211DBContext())
             {
-                Order updateOrder = GetOrderById(id);
-                if (updateOrder != null)
+                try
                 {
-                    context.Orders.Update(updatedOrderInfo);
-                    context.SaveChanges();
-                    return true;
+                    Order updateOrder = GetOrderById(id);
+                    if (updateOrder != null)
+                    {
+                        context.Orders.Update(updatedOrderInfo);
+                        context.SaveChanges();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
-                else
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    return false;
+                }
+                catch (DbUpdateException ex)
                 {
                     return false;
                 }
             }
-            catch (DbUpdateConcurrencyException ex)
+        }
+
+        public Order GetOrderById(int id)
+        {
+            using(context = new AssignmentPRN211DBContext())
             {
-                return false;
-            }
-            catch (DbUpdateException ex)
-            {
-                return false;
+                return context.Orders.SingleOrDefault<Order>((m) => m.OrderId == id);
             }
         }
 
-        public Order GetOrderById(int id) => context.Orders.SingleOrDefault<Order>((m) => m.OrderId == id);
+        public List<Order> GetOrderByMemberId(int memberId)
+        {
+            using(context=new AssignmentPRN211DBContext())
+            {
+                return context.Orders.Where<Order>((m) => m.MemberId == memberId).ToList();
+            }
+        }
 
-        public List<Order> GetOrderByMemberId(int memberId) => context.Orders.Where<Order>((m) => m.MemberId == memberId).ToList();
+        public List<Order> GetOrderByDateRange(DateTime startDate, DateTime endDate)
+        {
+            using(context = new AssignmentPRN211DBContext())
+            {
+                return context.Orders.Where<Order>((m) => m.OrderDate >= startDate && m.OrderDate <= endDate).ToList();
+            }
+        }
 
-        public List<Order> GetOrderByDateRange(DateTime startDate, DateTime endDate) => context.Orders.Where<Order>((m) => m.OrderDate >= startDate && m.OrderDate <= endDate).ToList();
-
-        public List<Order> GetAllOrders() => context.Orders.ToList<Order>();
+        public List<Order> GetAllOrders()
+        {
+            using(context = new AssignmentPRN211DBContext())
+            {
+                return context.Orders.ToList<Order>();
+            }
+        }
     }
 }

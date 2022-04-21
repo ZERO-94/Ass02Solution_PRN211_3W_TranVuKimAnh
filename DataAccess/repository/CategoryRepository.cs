@@ -10,7 +10,7 @@ namespace DataAccess.repository
     public class CategoryRepository : ICategoryRepository
     {
 
-        private CategoryDAO daoInstance = CategoryDAO.Instance;
+        private CategoryDAO daoInstance = new CategoryDAO();
 
         public List<Category> GetAllCategories() => daoInstance.GetAllCategories();
 

@@ -14,29 +14,18 @@ namespace DataAccess
         private AssignmentPRN211DBContext context = new AssignmentPRN211DBContext();
 
         //Use singleton design pattern
-        private CategoryDAO()
+        public CategoryDAO()
         {
+
         }
 
-        public static CategoryDAO Instance
+        public List<Category> GetAllCategories()
         {
-            get
-            {
-                lock (instanceLock)
-                {
-                    if (instance == null)
-                    {
-                        instance = new CategoryDAO();
-                    }
-
-                    return instance;
-                }
-
-            }
+                return context.Categories.ToList();
         }
 
-        public List<Category> GetAllCategories() => context.Categories.ToList();
-
-        public Category GetCategoryById(int id) => context.Categories.SingleOrDefault(c => c.CategoryId == id);
+        public Category GetCategoryById(int id) {
+                return context.Categories.SingleOrDefault(c => c.CategoryId == id);
+        }
     }
 }

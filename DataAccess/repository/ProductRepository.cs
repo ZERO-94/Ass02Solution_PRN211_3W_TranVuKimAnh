@@ -10,7 +10,7 @@ namespace DataAccess.repository
     public class ProductRepository : IProductRepository
     {
 
-        private ProductDAO daoInstance = ProductDAO.Instance;
+        private ProductDAO daoInstance = new ProductDAO();
 
         public bool CreateProduct(Product Product) => daoInstance.CreateProduct(Product);
 

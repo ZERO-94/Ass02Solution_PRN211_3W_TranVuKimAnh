@@ -16,7 +16,7 @@ namespace DataAccess
 
         private static MemberDAO instance;
         private static readonly object instanceLock = new object();
-        private AssignmentPRN211DBContext context = new AssignmentPRN211DBContext();
+        private AssignmentPRN211DBContext context;
 
         //Use singleton design pattern
         private MemberDAO()
@@ -42,115 +42,146 @@ namespace DataAccess
 
         public bool CreateMember(Member newMember)
         {
-            try
+            using(context = new AssignmentPRN211DBContext())
             {
-                context.Members.Add(newMember);
-                context.SaveChanges();
-                return true;
-            } catch (DbUpdateConcurrencyException ex)
-            {
-                return false;
-            } catch (DbUpdateException ex)
-            {
-                return false;
+                try
+                {
+                    context.Members.Add(newMember);
+                    context.SaveChanges();
+                    return true;
+                }
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    return false;
+                }
+                catch (DbUpdateException ex)
+                {
+                    return false;
+                }
             }
         }
 
         public bool DeleteMember(int id)
         {
-            try
+            using(context = new AssignmentPRN211DBContext())
             {
-                Member deleteMember = GetMemberById(id);
-                if (deleteMember != null)
+                try
                 {
-                    context.Members.Remove(deleteMember);
-                    context.SaveChanges();
-                    return true;
+                    Member deleteMember = GetMemberById(id);
+                    if (deleteMember != null)
+                    {
+                        context.Members.Remove(deleteMember);
+                        context.SaveChanges();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
-                else
+                catch (DbUpdateConcurrencyException ex)
                 {
                     return false;
                 }
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return false;
-            }
-            catch (DbUpdateException ex)
-            {
-                return false;
+                catch (DbUpdateException ex)
+                {
+                    return false;
+                }
             }
         }
 
         public bool UpdateMember(int id, Member updatedMemberInfo)
         {
-            try
+            using(context = new AssignmentPRN211DBContext())
             {
-                Member updateMember = GetMemberById(id);
-                if (updateMember != null)
+                try
                 {
-                    context.Members.Update(updatedMemberInfo);
-                    context.SaveChanges();
-                    return true;
+                    Member updateMember = GetMemberById(id);
+                    if (updateMember != null)
+                    {
+                        context.Members.Update(updatedMemberInfo);
+                        context.SaveChanges();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
-                else
+                catch (DbUpdateConcurrencyException ex)
                 {
                     return false;
                 }
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return false;
-            }
-            catch (DbUpdateException ex)
-            {
-                return false;
+                catch (DbUpdateException ex)
+                {
+                    return false;
+                }
             }
         }
 
         public bool ChangePassword(int id, string oldPassword, string newPassword)
         {
-            try
+            using(context=new AssignmentPRN211DBContext())
             {
-                Member updateMember = GetMemberById(id);
-                if (updateMember != null && updateMember.Password.Equals(oldPassword))
+                try
                 {
-                    updateMember.Password = newPassword;
-                    context.Members.Update(updateMember);
-                    context.SaveChanges();
-                    return true;
+                    Member updateMember = GetMemberById(id);
+                    if (updateMember != null && updateMember.Password.Equals(oldPassword))
+                    {
+                        updateMember.Password = newPassword;
+                        context.Members.Update(updateMember);
+                        context.SaveChanges();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
-                else
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    return false;
+                }
+                catch (DbUpdateException ex)
                 {
                     return false;
                 }
             }
-            catch (DbUpdateConcurrencyException ex)
+        }
+
+        public Member GetMemberById(int id)
+        {
+            using(context = new AssignmentPRN211DBContext())
             {
-                return false;
-            }
-            catch (DbUpdateException ex)
-            {
-                return false;
+                return context.Members.SingleOrDefault<Member>((m) => m.MemberId == id);
             }
         }
 
-        public Member GetMemberById(int id) => context.Members.SingleOrDefault<Member>((m) => m.MemberId == id);
-
-        public List<Member> GetAllMembers() => context.Members.ToList<Member>();
+        public List<Member> GetAllMembers()
+        {
+            using(context = new AssignmentPRN211DBContext())
+            {
+                return context.Members.ToList<Member>();
+            }
+        }
 
         public Member CheckLogin(string email, string password) {
-            //get default account
-            using StreamReader streamReader = new StreamReader(Directory.GetCurrentDirectory() + @"\appsettings.json");
-            string json = streamReader.ReadToEnd();
-            Admin admin = JsonConvert.DeserializeObject<Admin>(json);
-
-            if(admin.Email.Equals(email) && admin.Password.Equals(password))
+            
+            using(context = new AssignmentPRN211DBContext())
             {
-                return admin;
+                //get default account
+                using StreamReader streamReader = new StreamReader(Directory.GetCurrentDirectory() + @"\appsettings.json");
+                string json = streamReader.ReadToEnd();
+                Admin admin = JsonConvert.DeserializeObject<Admin>(json);
+
+                if (admin.Email.Equals(email) && admin.Password.Equals(password))
+                {
+                    return admin;
+                }
+
+                return context.Members.SingleOrDefault<Member>(m => m.Email.Equals(email) && m.Password.Equals(password));
             }
 
-            return context.Members.SingleOrDefault<Member>(m => m.Email.Equals(email) && m.Password.Equals(password));
         }
     }
 }

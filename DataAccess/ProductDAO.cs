@@ -15,104 +15,94 @@ namespace DataAccess
         private AssignmentPRN211DBContext context = new AssignmentPRN211DBContext();
 
         //Use singleton design pattern
-        private ProductDAO()
+        public ProductDAO()
         {
-        }
 
-        public static ProductDAO Instance
-        {
-            get
-            {
-                lock (instanceLock)
-                {
-                    if (instance == null)
-                    {
-                        instance = new ProductDAO();
-                    }
-
-                    return instance;
-                }
-
-            }
         }
 
         public bool CreateProduct(Product newProduct)
         {
-            try
-            {
-                context.Products.Add(newProduct);
-                context.SaveChanges();
-                return true;
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return false;
-            }
-            catch (DbUpdateException ex)
-            {
-                return false;
-            }
+                try
+                {
+                    context.Entry(newProduct).State = EntityState.Added;
+                    context.SaveChanges();
+                    return true;
+                }
+                catch (DbUpdateConcurrencyException ex)
+                {
+                    return false;
+                }
+                catch (DbUpdateException ex)
+                {
+                    return false;
+                }
         }
 
         public bool DeleteProduct(int id)
         {
-            try
-            {
-                Product deleteProduct = GetProductById(id);
-                if (deleteProduct != null)
+                try
                 {
-                    context.Products.Remove(deleteProduct);
-                    context.SaveChanges();
-                    return true;
+                    Product deleteProduct = GetProductById(id);
+                    if (deleteProduct != null)
+                    {
+                        context.Entry(deleteProduct).State = EntityState.Deleted;
+                        context.SaveChanges();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
-                else
+                catch (DbUpdateConcurrencyException ex)
                 {
                     return false;
                 }
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return false;
-            }
-            catch (DbUpdateException ex)
-            {
-                return false;
-            }
+                catch (DbUpdateException ex)
+                {
+                    return false;
+                }
         }
 
         public bool UpdateProduct(int id, Product updatedProductInfo)
         {
-            try
-            {
-                Product updateProduct = GetProductById(id);
-                if (updateProduct != null)
+                try
                 {
-                    context.Products.Update(updatedProductInfo);
-                    context.SaveChanges();
-                    return true;
+                    Product updateProduct = GetProductById(id);
+                    if (updateProduct != null)
+                    {
+                        context.Entry(updatedProductInfo).State = EntityState.Modified;
+                        context.SaveChanges();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
-                else
+                catch (DbUpdateConcurrencyException ex)
                 {
                     return false;
                 }
-            }
-            catch (DbUpdateConcurrencyException ex)
-            {
-                return false;
-            }
-            catch (DbUpdateException ex)
-            {
-                return false;
-            }
+                catch (DbUpdateException ex)
+                {
+                    return false;
+                }
         }
 
-        public Product GetProductById(int id) => context.Products.SingleOrDefault<Product>((m) => m.ProductId == id);
+        public Product GetProductById(int id)
+        {
+                return context.Products.AsNoTracking().SingleOrDefault<Product>((m) => m.ProductId == id);
+        }
 
-        public List<Product> GetAllProducts() => context.Products.ToList<Product>();
+        public List<Product> GetAllProducts()
+        {
+                return context.Products.AsNoTracking().ToList<Product>();
+        }
 
         public List<Product> SearchProduct(int? searchId, string? searchName, decimal? searchPrice, int? searchInStock)
         {
-            return context.Products.Where(product => searchId != null || product.ProductId == searchId)
+                return context.Products.AsNoTracking().Where(product => searchId != null || product.ProductId == searchId)
                 .Where(product => searchName == null || product.ProductName.Contains(searchName))
                 .Where(product => searchPrice == null || product.UnitPrice == searchPrice)
                 .Where(product => searchInStock == null || product.UnitsInStock == searchInStock)
