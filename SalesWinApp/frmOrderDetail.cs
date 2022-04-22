@@ -19,6 +19,7 @@ namespace SalesWinApp
         private OrderRepository orderRepository;
         private ICategoryRepository categoryRepository;
         private IMemberRepository memberRepository;
+        private IProductRepository productRepository;
         public frmOrderDetail(string operationType, Order updateOrder)
         {
             this.operationType = operationType;
@@ -26,6 +27,7 @@ namespace SalesWinApp
             orderRepository = new OrderRepository();
             categoryRepository = new CategoryRepository();
             memberRepository = new MemberRepository();
+            productRepository = new ProductRepository();
 
             InitializeComponent();
             btnCancel.CausesValidation = false;
@@ -44,7 +46,8 @@ namespace SalesWinApp
                         MemberId = int.Parse(cbMember.SelectedValue.ToString()),
                         OrderDate = dtpOrderDate.Value,
                         ShippedDate = dtpShippedDate.Value,
-                        RequiredDate = dtpRequiredDate.Value
+                        RequiredDate = dtpRequiredDate.Value,
+                        Freight = decimal.Parse(tbFreight.Text.Trim())
                     };
 
                     return newOrder;
@@ -55,6 +58,7 @@ namespace SalesWinApp
                     order.OrderDate = dtpOrderDate.Value;
                     order.ShippedDate = dtpShippedDate.Value;
                     order.RequiredDate = dtpRequiredDate.Value;
+                    order.Freight = decimal.Parse(tbFreight.Text.Trim());
 
                     return order;
                 } else
@@ -85,6 +89,29 @@ namespace SalesWinApp
                 {
                     e.Cancel = true;
                     errorProvider1.SetError(tbId, "Id can't be duplicated!");
+                }
+                else
+                {
+                    e.Cancel = false;
+                    errorProvider1.SetError(tbId, null);
+                }
+            }
+        }
+
+        private void tbFreight_Validating(object sender, CancelEventArgs e)
+        {
+            if (operationType.Equals("create"))
+            {
+                decimal result;
+                if (string.IsNullOrWhiteSpace(tbId.Text.Trim()))
+                {
+                    e.Cancel = true;
+                    errorProvider1.SetError(tbId, "Freight can't be blank!");
+                }
+                else if (!decimal.TryParse(tbId.Text.Trim(), out result))
+                {
+                    e.Cancel = true;
+                    errorProvider1.SetError(tbId, "Freight must be number!");
                 }
                 else
                 {
@@ -161,11 +188,7 @@ namespace SalesWinApp
                 dtpShippedDate.Value = (DateTime)order.ShippedDate;
 
                 //load order detail
-                orderDetailDataGrid.DataSource = order.OrderDetails.ToList();
-                orderDetailDataGrid.Columns[6].Visible = false;
-                orderDetailDataGrid.Columns[5].Visible = false;
-                orderDetailDataGrid.Columns[4].Visible = false;
-                orderDetailDataGrid.Columns[0].Visible = false;
+                LoadTable();
             }
         }
 
@@ -173,7 +196,7 @@ namespace SalesWinApp
         {
             try
             {
-                frmProductToOrder frmProductToOrder = new frmProductToOrder("create", null);
+                frmProductToOrder frmProductToOrder = new frmProductToOrder("create", null, order);
 
                 if (frmProductToOrder.ShowDialog() == DialogResult.OK)
                 {
@@ -188,8 +211,7 @@ namespace SalesWinApp
             finally
             {
                 //load order detail
-                orderDetailDataGrid.DataSource = order.OrderDetails.ToList();
-                orderDetailDataGrid.Columns[4].Visible = false;
+                LoadTable();
             }
         }
 
@@ -213,8 +235,25 @@ namespace SalesWinApp
             finally
             {
                 //load order detail
-                orderDetailDataGrid.DataSource = order.OrderDetails.ToList();
+                LoadTable();
             }
+        }
+
+        private void LoadTable()
+        {
+            DataTable productOfOrder = new DataTable();
+            productOfOrder.Columns.Add("Product ID");
+            productOfOrder.Columns.Add("Product Name");
+            productOfOrder.Columns.Add("Product Unit Price");
+            productOfOrder.Columns.Add("Quantity");
+            productOfOrder.Columns.Add("Discount");
+
+            foreach(OrderDetail orderDetail in order.OrderDetails)
+            {
+                productOfOrder.Rows.Add(orderDetail.ProductId, productRepository.GetProductById(orderDetail.ProductId).ProductName, orderDetail.UnitPrice, orderDetail.Quantity, orderDetail.Discount);
+            }
+
+            orderDetailDataGrid.DataSource = productOfOrder;
         }
 
         private void updateProduct_Click(object sender, EventArgs e)
@@ -230,7 +269,7 @@ namespace SalesWinApp
                     {
                         try
                         {
-                            frmProductToOrder frmProductToOrder = new frmProductToOrder("update", updateOrder);
+                            frmProductToOrder frmProductToOrder = new frmProductToOrder("update", updateOrder, order);
 
                             if (frmProductToOrder.ShowDialog() == DialogResult.OK)
                             {
@@ -258,7 +297,7 @@ namespace SalesWinApp
             finally
             {
                 //load order detail
-                orderDetailDataGrid.DataSource = order.OrderDetails.ToList();
+                LoadTable();
             }
         }
     }

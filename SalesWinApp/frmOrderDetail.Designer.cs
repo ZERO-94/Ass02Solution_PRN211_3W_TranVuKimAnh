@@ -47,6 +47,8 @@
             this.removeProduct = new System.Windows.Forms.Button();
             this.updateProduct = new System.Windows.Forms.Button();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            this.label1 = new System.Windows.Forms.Label();
+            this.tbFreight = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.orderDetailDataGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
@@ -54,10 +56,11 @@
             // cbMember
             // 
             this.cbMember.FormattingEnabled = true;
-            this.cbMember.Location = new System.Drawing.Point(490, 69);
+            this.cbMember.Location = new System.Drawing.Point(347, 69);
             this.cbMember.Name = "cbMember";
-            this.cbMember.Size = new System.Drawing.Size(263, 23);
+            this.cbMember.Size = new System.Drawing.Size(200, 23);
             this.cbMember.TabIndex = 58;
+            this.cbMember.Validating += new System.ComponentModel.CancelEventHandler(this.cbMember_Validating);
             // 
             // lbOperation
             // 
@@ -71,7 +74,7 @@
             // lbId
             // 
             this.lbId.AutoSize = true;
-            this.lbId.Location = new System.Drawing.Point(167, 51);
+            this.lbId.Location = new System.Drawing.Point(53, 51);
             this.lbId.Name = "lbId";
             this.lbId.Size = new System.Drawing.Size(18, 15);
             this.lbId.TabIndex = 54;
@@ -79,10 +82,11 @@
             // 
             // tbId
             // 
-            this.tbId.Location = new System.Drawing.Point(167, 69);
+            this.tbId.Location = new System.Drawing.Point(53, 69);
             this.tbId.Name = "tbId";
-            this.tbId.Size = new System.Drawing.Size(263, 23);
+            this.tbId.Size = new System.Drawing.Size(200, 23);
             this.tbId.TabIndex = 53;
+            this.tbId.Validating += new System.ComponentModel.CancelEventHandler(this.tbId_Validating);
             // 
             // btnOK
             // 
@@ -107,7 +111,7 @@
             // lbMember
             // 
             this.lbMember.AutoSize = true;
-            this.lbMember.Location = new System.Drawing.Point(490, 51);
+            this.lbMember.Location = new System.Drawing.Point(347, 51);
             this.lbMember.Name = "lbMember";
             this.lbMember.Size = new System.Drawing.Size(52, 15);
             this.lbMember.TabIndex = 48;
@@ -165,9 +169,13 @@
             // 
             // orderDetailDataGrid
             // 
+            this.orderDetailDataGrid.AllowUserToAddRows = false;
+            this.orderDetailDataGrid.AllowUserToDeleteRows = false;
             this.orderDetailDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.orderDetailDataGrid.Location = new System.Drawing.Point(53, 194);
+            this.orderDetailDataGrid.MultiSelect = false;
             this.orderDetailDataGrid.Name = "orderDetailDataGrid";
+            this.orderDetailDataGrid.ReadOnly = true;
             this.orderDetailDataGrid.RowTemplate.Height = 25;
             this.orderDetailDataGrid.Size = new System.Drawing.Size(685, 262);
             this.orderDetailDataGrid.TabIndex = 66;
@@ -206,11 +214,31 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(643, 51);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(44, 15);
+            this.label1.TabIndex = 71;
+            this.label1.Text = "Freight";
+            // 
+            // tbFreight
+            // 
+            this.tbFreight.Location = new System.Drawing.Point(643, 69);
+            this.tbFreight.Name = "tbFreight";
+            this.tbFreight.Size = new System.Drawing.Size(200, 23);
+            this.tbFreight.TabIndex = 70;
+            this.tbFreight.Validating += new System.ComponentModel.CancelEventHandler(this.tbFreight_Validating);
+            // 
             // frmOrderDetail
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.ClientSize = new System.Drawing.Size(908, 529);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.tbFreight);
             this.Controls.Add(this.updateProduct);
             this.Controls.Add(this.removeProduct);
             this.Controls.Add(this.addProduct);
@@ -258,5 +286,7 @@
         private System.Windows.Forms.Button removeProduct;
         private System.Windows.Forms.Button updateProduct;
         private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox tbFreight;
     }
 }

@@ -19,9 +19,11 @@ namespace SalesWinApp
         List<Product> productList;
         string operationType;
         OrderDetail orderDetail;
+        Order order;
 
-        public frmProductToOrder(string operationType, OrderDetail orderDetail)
+        public frmProductToOrder(string operationType, OrderDetail orderDetail, Order order)
         {
+            this.order = order;
             this.operationType = operationType;
             this.orderDetail = orderDetail;
             InitializeComponent();
@@ -67,8 +69,15 @@ namespace SalesWinApp
         {
             productList = productRepository.GetAllProducts();
 
+            //get product that already in orderdetail
+            List<int> inOrderProduct = new List<int>();
+            foreach (OrderDetail detail in order.OrderDetails)
+            {
+                inOrderProduct.Add(detail.ProductId);
+            } 
+
             //load combo box
-            cbProduct.DataSource = productList;
+            cbProduct.DataSource = productList.Where(p => !inOrderProduct.Contains(p.ProductId)).ToList();
             cbProduct.DisplayMember = "ProductName";
             cbProduct.ValueMember = "ProductId";
 

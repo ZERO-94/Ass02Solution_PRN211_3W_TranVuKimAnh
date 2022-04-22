@@ -39,9 +39,10 @@ namespace SalesWinApp
                 productManagement.Visible = false;
                 myProfile.Visible = true;
                 frmMembers1.Hide();
-                frmOrders1.Show();
+                frmOrders1.Hide();
                 frmProducts1.Hide();
-                frmProfile1.Hide();
+                frmProfile1.Show();
+                frmProfile1.setMember(user);
             }
         }
 
@@ -66,15 +67,19 @@ namespace SalesWinApp
                 frmMembers1.Hide();
                 frmOrders1.Show();
                 frmProducts1.Hide();
+                
             } else
             {
                 frmProfile1.Hide();
                 frmOrders1.Show();
             }
+
+            frmOrders1.setMember(user);
         }
 
         private void myProfile_Click(object sender, EventArgs e)
         {
+            frmProfile1.setMember(user);
             frmProfile1.Show();
             frmOrders1.Hide();
         }

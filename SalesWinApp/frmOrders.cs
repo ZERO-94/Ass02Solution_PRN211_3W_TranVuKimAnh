@@ -15,7 +15,7 @@ namespace SalesWinApp
 {
     public partial class frmOrders : UserControl
     {
-        private Admin admin;
+        private Member member;
         private IOrderRepository orderRepository;
         private ICategoryRepository categoryRepository;
         private IMemberRepository memberRepository;
@@ -23,12 +23,24 @@ namespace SalesWinApp
 
         public frmOrders()
         {
-            this.admin = admin;
             this.loginForm = loginForm;
             orderRepository = new OrderRepository();
             categoryRepository = new CategoryRepository();
             memberRepository = new MemberRepository();
             InitializeComponent();
+        }
+
+        public void setMember(Member member)
+        {
+            this.member=member;
+
+            if(member!=null)
+            {
+                loadTableData(delegate (List<Order> list)
+                {
+                    return list;
+                });
+            }
         }
 
         private delegate List<Order> TableFilter(List<Order> orderList);
@@ -49,6 +61,11 @@ namespace SalesWinApp
             //filter in here
             List<Order> ordersAfterFilter = filter(orders);
 
+            if(member != null && !(member is Admin))
+            {
+                ordersAfterFilter = ordersAfterFilter.Where(o => o.MemberId == member.MemberId).ToList();
+            }
+
             foreach (Order order in ordersAfterFilter)
             {
                 orderTable.Rows.Add(order.OrderId, order.MemberId, order.OrderDate, order.RequiredDate, order.ShippedDate, order.Freight);
@@ -61,7 +78,7 @@ namespace SalesWinApp
         {
             //logout
             loginForm.Show();
-            admin = null;
+            member = null;
 
             this.Hide();
         }

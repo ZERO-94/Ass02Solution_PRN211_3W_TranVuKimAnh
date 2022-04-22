@@ -37,9 +37,13 @@
             // 
             // orderDataGrid
             // 
+            this.orderDataGrid.AllowUserToAddRows = false;
+            this.orderDataGrid.AllowUserToDeleteRows = false;
             this.orderDataGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.orderDataGrid.Location = new System.Drawing.Point(26, 114);
+            this.orderDataGrid.MultiSelect = false;
             this.orderDataGrid.Name = "orderDataGrid";
+            this.orderDataGrid.ReadOnly = true;
             this.orderDataGrid.RowTemplate.Height = 25;
             this.orderDataGrid.Size = new System.Drawing.Size(600, 250);
             this.orderDataGrid.TabIndex = 0;
