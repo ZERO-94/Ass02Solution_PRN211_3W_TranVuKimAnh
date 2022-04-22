@@ -1,4 +1,5 @@
-﻿using BusinessObject.Models;
+﻿using BusinessObject;
+using BusinessObject.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,13 @@ namespace DataAccess
                 try
                 {
                     context.Orders.Add(newOrder);
+                    foreach(OrderDetail detail in newOrder.OrderDetails)
+                    {
+                        Product product = context.Products.SingleOrDefault(p => p.ProductId == detail.ProductId);
+                        product.UnitsInStock -= detail.Quantity;
+                        context.Products.Update(product);
+                        context.SaveChanges();
+                    }
                     context.SaveChanges();
                     return true;
                 }
@@ -68,17 +76,34 @@ namespace DataAccess
         {
                 try
                 {
-                    Order updateOrder = GetOrderById(id);
-                    if (updateOrder != null)
-                    {
-                        context.Orders.Update(updatedOrderInfo);
-                        context.SaveChanges();
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    //Order updateOrder = context.Orders.AsNoTracking().SingleOrDefault(o => o.OrderId == id);
+                    //if (updateOrder != null)
+                    //{
+                    //    context.Orders.Update(updatedOrderInfo);
+                    //    foreach (OrderDetail detail in updatedOrderInfo.OrderDetails)
+                    //    {
+                    //        Product product = context.Products.SingleOrDefault(p => p.ProductId == detail.ProductId);
+                    //        int gap = updateOrder.OrderDetails.SingleOrDefault(d => d.ProductId == detail.ProductId).Quantity - detail.Quantity;
+                            
+                    //        if (gap > 0)
+                    //        {
+                    //            product.UnitsInStock += gap;
+                    //            context.Products.Update(product);
+                    //        } else if (gap < 0)
+                    //        {
+                    //            product.UnitsInStock -= gap;
+                    //            context.Products.Update(product);
+                    //        }
+                    //        context.SaveChanges();
+
+                    //    }
+                    //    context.SaveChanges();
+                    //    return true;
+                    //}
+                    //else
+                    //{
+                    //    return false;
+                    //}
                 }
                 catch (DbUpdateConcurrencyException ex)
                 {
@@ -108,6 +133,41 @@ namespace DataAccess
         public List<Order> GetAllOrders()
         {
                 return context.Orders.Include(order => order.OrderDetails).ThenInclude(orderDetail => orderDetail.Product).ToList<Order>();
+        }
+
+        public SaleReport GetSaleReport(DateTime startDate, DateTime endDate)
+        {
+            SaleReport saleReport = new SaleReport();
+
+            List<Order> soldOrder = GetOrderByDateRange(startDate, endDate);
+
+            List<dynamic> products = new List<dynamic>();
+
+            foreach(Order order in soldOrder)
+            {
+                foreach(OrderDetail detail in order.OrderDetails)
+                {
+                    if(products.SingleOrDefault(p => p.ProductId == detail.ProductId) != null)
+                    {
+                        dynamic product = products.SingleOrDefault(p => p.ProductId == detail.ProductId);
+                        product.soldAmount += detail.Quantity;
+                        saleReport.Income += detail.Quantity * detail.UnitPrice;
+                    } else
+                    {
+                        dynamic product = new { 
+                            ProductId = detail.ProductId,
+                            ProductName = detail.Product.ProductName,
+                            UnitPrice = detail.UnitPrice,
+                            soldAmount = detail.Quantity
+                        };
+                        products.Add(product);
+
+                        saleReport.Income += detail.Quantity * detail.UnitPrice;
+                    }
+                }
+            }
+
+            return saleReport;
         }
     }
 }

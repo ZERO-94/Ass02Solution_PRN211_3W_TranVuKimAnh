@@ -1,4 +1,5 @@
-﻿using BusinessObject.Models;
+﻿using BusinessObject;
+using BusinessObject.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,5 +23,7 @@ namespace DataAccess.repository
         public List<Order> GetOrderByDateRange(DateTime startDate, DateTime endDate);
 
         public List<Order> GetAllOrders();
+
+        public SaleReport GetSaleReport(DateTime startDate, DateTime endDate);
     }
 }

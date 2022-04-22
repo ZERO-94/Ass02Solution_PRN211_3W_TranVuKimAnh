@@ -32,5 +32,8 @@
     <Compile Update="frmProfile.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Update="frmSaleReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

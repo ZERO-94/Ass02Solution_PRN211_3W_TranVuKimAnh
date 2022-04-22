@@ -86,7 +86,7 @@ namespace DataAccess
 
         public List<Product> SearchProduct(int? searchId, string? searchName, decimal? searchPrice, int? searchInStock)
         {
-                return context.Products.Where(product => searchId != null || product.ProductId == searchId)
+                return context.Products.Where(product => searchId == null || product.ProductId == searchId)
                 .Where(product => searchName == null || product.ProductName.Contains(searchName))
                 .Where(product => searchPrice == null || product.UnitPrice == searchPrice)
                 .Where(product => searchInStock == null || product.UnitsInStock == searchInStock)

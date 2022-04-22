@@ -16,8 +16,10 @@ namespace SalesWinApp
     {
 
         private Member user;
-        public frmMain(Member member)
+        private frmLogin frmLogin;
+        public frmMain(Member member, frmLogin frmLogin)
         {
+            this.frmLogin = frmLogin;
             user = member;
             InitializeComponent();
         }
@@ -82,6 +84,13 @@ namespace SalesWinApp
             frmProfile1.setMember(user);
             frmProfile1.Show();
             frmOrders1.Hide();
+        }
+
+        private void logoutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            frmLogin.Show();
+            user = null;
         }
     }
 }

@@ -77,6 +77,7 @@
             this.memberDataGrid.RowTemplate.Height = 25;
             this.memberDataGrid.Size = new System.Drawing.Size(600, 250);
             this.memberDataGrid.TabIndex = 4;
+            this.memberDataGrid.VisibleChanged += new System.EventHandler(this.frmMembers_Load);
             // 
             // frmMembers
             // 
@@ -89,6 +90,7 @@
             this.Name = "frmMembers";
             this.Size = new System.Drawing.Size(776, 411);
             this.Load += new System.EventHandler(this.frmMembers_Load);
+            this.VisibleChanged += new System.EventHandler(this.frmMembers_Load);
             ((System.ComponentModel.ISupportInitialize)(this.memberDataGrid)).EndInit();
             this.ResumeLayout(false);
 

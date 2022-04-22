@@ -1,4 +1,5 @@
-﻿using BusinessObject.Models;
+﻿using BusinessObject;
+using BusinessObject.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,5 +26,10 @@ namespace DataAccess.repository
         public List<Order> GetOrderByMemberId(int memberId) => daoInstance.GetOrderByMemberId(memberId);
 
         public bool UpdateOrder(int id, Order updatedOrderInfo) => daoInstance.UpdateOrder(id, updatedOrderInfo);
+
+        public SaleReport GetSaleReport(DateTime startDate, DateTime endDate)
+        {
+            return daoInstance.GetSaleReport(startDate, endDate);
+        }
     }
 }

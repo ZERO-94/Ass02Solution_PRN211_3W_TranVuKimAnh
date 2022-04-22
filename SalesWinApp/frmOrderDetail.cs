@@ -40,17 +40,14 @@ namespace SalesWinApp
 
                 if (operationType.Equals("create"))
                 {
-                    Order newOrder = new Order()
-                    {
-                        OrderId = int.Parse(tbId.Text.Trim()),
-                        MemberId = int.Parse(cbMember.SelectedValue.ToString()),
-                        OrderDate = dtpOrderDate.Value,
-                        ShippedDate = dtpShippedDate.Value,
-                        RequiredDate = dtpRequiredDate.Value,
-                        Freight = decimal.Parse(tbFreight.Text.Trim())
-                    };
+                    order.OrderId = int.Parse(tbId.Text.Trim());
+                    order.MemberId = int.Parse(cbMember.SelectedValue.ToString());
+                    order.OrderDate = dtpOrderDate.Value;
+                    order.ShippedDate = dtpShippedDate.Value;
+                    order.RequiredDate = dtpRequiredDate.Value;
+                    order.Freight = decimal.Parse(tbFreight.Text.Trim());
 
-                    return newOrder;
+                    return order;
                     
                 }
                 else if (operationType.Equals("update"))
@@ -200,7 +197,7 @@ namespace SalesWinApp
 
                 if (frmProductToOrder.ShowDialog() == DialogResult.OK)
                 {
-                    //create member
+                    //create order detail
                     OrderDetail orderDetailObject = frmProductToOrder.GetOrderDetailObject();
 
                     orderDetailObject.OrderId = order.OrderId;

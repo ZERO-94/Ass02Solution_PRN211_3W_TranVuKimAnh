@@ -121,6 +121,69 @@ namespace SalesWinApp
             }
         }
 
+        private void tbId_Validating(object sender, CancelEventArgs e)
+        {
+            int result;
+            if (tbId.Text.Trim().Length > 0 && !int.TryParse(tbId.Text.Trim(), out result))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(tbId, "Id must be number!");
+            }
+            else
+            {
+                e.Cancel = false;
+                errorProvider1.SetError(tbId, null);
+            }
+        }
+
+        private void tbUnitPrice_Validating(object sender, CancelEventArgs e)
+        {
+            decimal result;
+            if (tbUnitPrice.Text.Trim().Length > 0 && !decimal.TryParse(tbUnitPrice.Text.Trim(), out result))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(tbUnitPrice, "Unit Price must be decimal!");
+            }
+            else
+            {
+                e.Cancel = false;
+                errorProvider1.SetError(tbUnitPrice, null);
+            }
+        }
+
+        private void tbUnitInStock_Validating(object sender, CancelEventArgs e)
+        {
+
+            int result;
+            if (tbUnitInStock.Text.Trim().Length > 0 && !int.TryParse(tbUnitInStock.Text.Trim(), out result))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(tbUnitInStock, "Unit in Stock must be integer!");
+            }
+            else
+            {
+                e.Cancel = false;
+                errorProvider1.SetError(tbUnitInStock, null);
+            }
+        }
+
+        private void search_Click(object sender, EventArgs e)
+        {
+            if (ValidateChildren(ValidationConstraints.Enabled))
+            {
+                //load table
+                loadTableData(delegate (List<Product> list)
+                {
+                    int? searchId = tbId.Text.Trim().Length <= 0 ? null : int.Parse(tbId.Text.Trim());
+                    string? searchName = tbProductName.Text.Trim().Length <= 0 ? null : tbProductName.Text.Trim();
+                    int? searchUnitInStock = tbUnitInStock.Text.Trim().Length <= 0 ? null : int.Parse(tbUnitInStock.Text.Trim());
+                    decimal? searchUnitPrice = tbUnitPrice.Text.Trim().Length <= 0 ? null : decimal.Parse(tbUnitPrice.Text.Trim());
+
+                    return productRepository.SearchProduct(searchId, searchName, searchUnitPrice, searchUnitInStock);
+                });
+            }
+        }
+
         private void frmProducts_Load(object sender, EventArgs e)
         {
             loadTableData(delegate (List<Product> list)

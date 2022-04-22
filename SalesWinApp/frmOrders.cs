@@ -178,5 +178,13 @@ namespace SalesWinApp
                 });
             }
         }
+
+        private void report_Click(object sender, EventArgs e)
+        {
+            DateTime startTime = dtpStartDate.Value;
+            DateTime endTime = dtpEndDate.Value;
+
+
+        }
     }
 }

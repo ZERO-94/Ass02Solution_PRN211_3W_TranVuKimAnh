@@ -76,7 +76,7 @@ namespace SalesWinApp
             tbPassword.ResetText();
             this.Hide();
 
-            frmMain frmMain = new frmMain(member);
+            frmMain frmMain = new frmMain(member, this);
             this.FormClosed += (s, e) => frmMain.Close();
             frmMain.FormClosed += (s, e) => this.Close();
             frmMain.Show();

@@ -29,10 +29,11 @@
         private void InitializeComponent()
         {
             this.menuStrip = new System.Windows.Forms.MenuStrip();
+            this.myProfile = new System.Windows.Forms.ToolStripMenuItem();
             this.memberManagement = new System.Windows.Forms.ToolStripMenuItem();
             this.productManagement = new System.Windows.Forms.ToolStripMenuItem();
             this.orderManagement = new System.Windows.Forms.ToolStripMenuItem();
-            this.myProfile = new System.Windows.Forms.ToolStripMenuItem();
+            this.logoutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.frmMembers1 = new SalesWinApp.frmMembers();
             this.frmProducts1 = new SalesWinApp.frmProducts();
             this.frmOrders1 = new SalesWinApp.frmOrders();
@@ -46,12 +47,20 @@
             this.myProfile,
             this.memberManagement,
             this.productManagement,
-            this.orderManagement});
+            this.orderManagement,
+            this.logoutToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(800, 24);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "menuStrip1";
+            // 
+            // myProfile
+            // 
+            this.myProfile.Name = "myProfile";
+            this.myProfile.Size = new System.Drawing.Size(73, 20);
+            this.myProfile.Text = "My Profile";
+            this.myProfile.Click += new System.EventHandler(this.myProfile_Click);
             // 
             // memberManagement
             // 
@@ -74,12 +83,12 @@
             this.orderManagement.Text = "Order management";
             this.orderManagement.Click += new System.EventHandler(this.orderManagement_Click);
             // 
-            // myProfile
+            // logoutToolStripMenuItem
             // 
-            this.myProfile.Name = "myProfile";
-            this.myProfile.Size = new System.Drawing.Size(73, 20);
-            this.myProfile.Text = "My Profile";
-            this.myProfile.Click += new System.EventHandler(this.myProfile_Click);
+            this.logoutToolStripMenuItem.Name = "logoutToolStripMenuItem";
+            this.logoutToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.logoutToolStripMenuItem.Text = "Logout";
+            this.logoutToolStripMenuItem.Click += new System.EventHandler(this.logoutToolStripMenuItem_Click);
             // 
             // frmMembers1
             // 
@@ -141,5 +150,6 @@
         private frmProducts frmProducts1;
         private frmOrders frmOrders1;
         private frmProfile frmProfile1;
+        private System.Windows.Forms.ToolStripMenuItem logoutToolStripMenuItem;
     }
 }

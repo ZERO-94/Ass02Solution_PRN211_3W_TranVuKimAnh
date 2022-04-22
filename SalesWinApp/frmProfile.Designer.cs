@@ -93,6 +93,7 @@
             this.updateProfile.TabIndex = 7;
             this.updateProfile.Text = "update";
             this.updateProfile.UseVisualStyleBackColor = true;
+            this.updateProfile.VisibleChanged += new System.EventHandler(this.frmProfile_Load);
             this.updateProfile.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // label1
