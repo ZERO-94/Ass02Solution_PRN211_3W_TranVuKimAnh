@@ -55,7 +55,7 @@ namespace DataAccess
             {
                 try
                 {
-                    Order deleteOrder = context.Orders.Include(order => order.OrderDetails).ThenInclude(orderDetail => orderDetail.Product).SingleOrDefault(o => o.OrderId);
+                    Order deleteOrder = context.Orders.Include(order => order.OrderDetails).ThenInclude(orderDetail => orderDetail.Product).SingleOrDefault(o => o.OrderId == id);
                     if (deleteOrder != null)
                     {
                         context.Orders.Remove(deleteOrder);
@@ -160,7 +160,19 @@ namespace DataAccess
                         if (products.SingleOrDefault(p => p.ProductId == detail.ProductId) != null)
                         {
                             dynamic product = products.SingleOrDefault(p => p.ProductId == detail.ProductId);
-                            product.soldAmount += detail.Quantity;
+                            
+
+                            dynamic newProduct = new
+                            {
+                                ProductId = detail.ProductId,
+                                ProductName = detail.Product.ProductName,
+                                UnitPrice = detail.UnitPrice,
+                                SoldAmount = product.SoldAmount + detail.Quantity
+                            };
+
+                            products.Remove(product);
+                            products.Add(newProduct);
+
                             saleReport.Income += detail.Quantity * detail.UnitPrice;
                         }
                         else
@@ -170,7 +182,7 @@ namespace DataAccess
                                 ProductId = detail.ProductId,
                                 ProductName = detail.Product.ProductName,
                                 UnitPrice = detail.UnitPrice,
-                                soldAmount = detail.Quantity
+                                SoldAmount = detail.Quantity
                             };
                             products.Add(product);
 
@@ -178,6 +190,8 @@ namespace DataAccess
                         }
                     }
                 }
+
+                saleReport.soldProductList = products;
 
                 return saleReport;
             }

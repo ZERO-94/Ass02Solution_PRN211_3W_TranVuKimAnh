@@ -184,6 +184,9 @@ namespace SalesWinApp
                 dtpRequiredDate.Value = (DateTime)order.RequiredDate;
                 dtpShippedDate.Value = (DateTime)order.ShippedDate;
                 tbFreight.Text = order.Freight.ToString();
+                updateProduct.Hide();
+                addProduct.Hide();
+                removeProduct.Hide();
 
                 //load order detail
                 LoadTable();

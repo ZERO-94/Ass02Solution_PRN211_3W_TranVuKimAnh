@@ -49,7 +49,7 @@ namespace SalesWinApp
                 }
                 else if (operationType.Equals("update"))
                 {
-                    orderDetail.Product.UnitsInStock += orderDetail.Quantity - int.Parse(tbQuantity.Text);
+                    orderDetail.Product.UnitsInStock = orderDetail.Product.UnitsInStock + orderDetail.Quantity - int.Parse(tbQuantity.Text);
                     orderDetail.Quantity = int.Parse(tbQuantity.Text);
                     orderDetail.Discount = double.Parse(tbDiscount.Text);
 

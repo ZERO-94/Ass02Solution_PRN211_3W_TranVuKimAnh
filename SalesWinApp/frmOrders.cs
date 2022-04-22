@@ -184,7 +184,12 @@ namespace SalesWinApp
             DateTime startTime = dtpStartDate.Value;
             DateTime endTime = dtpEndDate.Value;
 
+            frmSaleReport frmSaleReport = new frmSaleReport(startTime, endTime);
 
+            if (frmSaleReport.ShowDialog() == DialogResult.OK)
+            {
+
+            }
         }
     }
 }

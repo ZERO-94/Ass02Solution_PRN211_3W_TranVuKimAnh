@@ -30,7 +30,17 @@ namespace SalesWinApp
         {
             SaleReport saleReport = orderRepository.GetSaleReport(startDate, endDate);
 
-            soldProductDataGrid.DataSource = saleReport.soldProductList;
+            DataTable dataTable = new DataTable();
+
+            dataTable.Columns.Add("Product Id");
+            dataTable.Columns.Add("Product Name");
+            dataTable.Columns.Add("Sold Amount");
+
+
+            foreach(dynamic product in saleReport.soldProductList)
+            {
+                dataTable.Rows.Add(product.ProductId, product.ProductName, product.SoldAmount);
+            }
 
             lbMoney.Text = saleReport.Income.ToString();
         }
