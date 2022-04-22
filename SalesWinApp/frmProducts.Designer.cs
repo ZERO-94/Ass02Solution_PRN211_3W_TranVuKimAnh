@@ -112,7 +112,6 @@
             this.tbUnitInStock.Name = "tbUnitInStock";
             this.tbUnitInStock.Size = new System.Drawing.Size(207, 23);
             this.tbUnitInStock.TabIndex = 14;
-            this.tbUnitInStock.VisibleChanged += new System.EventHandler(this.frmProducts_Load);
             this.tbUnitInStock.Validating += new System.ComponentModel.CancelEventHandler(this.tbUnitInStock_Validating);
             // 
             // tbProductName
@@ -191,7 +190,6 @@
             this.Controls.Add(this.productDataGrid);
             this.Name = "frmProducts";
             this.Size = new System.Drawing.Size(776, 411);
-            this.Load += new System.EventHandler(this.frmProducts_Load);
             ((System.ComponentModel.ISupportInitialize)(this.productDataGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);

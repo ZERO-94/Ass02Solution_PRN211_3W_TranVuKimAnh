@@ -184,7 +184,7 @@ namespace SalesWinApp
             }
         }
 
-        private void frmProducts_Load(object sender, EventArgs e)
+        public void load()
         {
             loadTableData(delegate (List<Product> list)
             {

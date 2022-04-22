@@ -139,11 +139,11 @@ namespace SalesWinApp
             }
         }
 
-        private void frmOrders_Load(object sender, EventArgs e)
+        public void load()
         {
             loadTableData(delegate (List<Order> list)
             {
-                return list; //get all
+                return list;
             });
         }
 

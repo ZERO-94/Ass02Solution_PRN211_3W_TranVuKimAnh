@@ -76,34 +76,35 @@ namespace DataAccess
         {
                 try
                 {
-                    //Order updateOrder = context.Orders.AsNoTracking().SingleOrDefault(o => o.OrderId == id);
-                    //if (updateOrder != null)
-                    //{
-                    //    context.Orders.Update(updatedOrderInfo);
-                    //    foreach (OrderDetail detail in updatedOrderInfo.OrderDetails)
-                    //    {
-                    //        Product product = context.Products.SingleOrDefault(p => p.ProductId == detail.ProductId);
-                    //        int gap = updateOrder.OrderDetails.SingleOrDefault(d => d.ProductId == detail.ProductId).Quantity - detail.Quantity;
-                            
-                    //        if (gap > 0)
-                    //        {
-                    //            product.UnitsInStock += gap;
-                    //            context.Products.Update(product);
-                    //        } else if (gap < 0)
-                    //        {
-                    //            product.UnitsInStock -= gap;
-                    //            context.Products.Update(product);
-                    //        }
-                    //        context.SaveChanges();
+                    Order updateOrder = context.Orders.AsNoTracking().SingleOrDefault(o => o.OrderId == id);
+                    if (updateOrder != null)
+                    {
+                        context.Orders.Update(updatedOrderInfo);
+                        foreach (OrderDetail detail in updatedOrderInfo.OrderDetails)
+                        {
+                            Product product = context.Products.SingleOrDefault(p => p.ProductId == detail.ProductId);
+                            int gap = updateOrder.OrderDetails.SingleOrDefault(d => d.ProductId == detail.ProductId).Quantity - detail.Quantity;
 
-                    //    }
-                    //    context.SaveChanges();
-                    //    return true;
-                    //}
-                    //else
-                    //{
-                    //    return false;
-                    //}
+                            if (gap > 0)
+                            {
+                                product.UnitsInStock += gap;
+                                context.Products.Update(product);
+                            }
+                            else if (gap < 0)
+                            {
+                                product.UnitsInStock -= gap;
+                                context.Products.Update(product);
+                            }
+                            context.SaveChanges();
+
+                        }
+                        context.SaveChanges();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 catch (DbUpdateConcurrencyException ex)
                 {

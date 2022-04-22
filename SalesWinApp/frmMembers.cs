@@ -118,12 +118,15 @@ namespace SalesWinApp
             }
         }
 
-        private void frmMembers_Load(object sender, EventArgs e)
+        public void load()
         {
-            loadTableData(delegate (List<Member> list)
+            if (this.Visible == true)
             {
-                return list; //get all
-            });
+                loadTableData(delegate (List<Member> list)
+                {
+                    return list; //get all
+                });
+            }
         }
 
         private void deleteMember_Click(object sender, EventArgs e)

@@ -14,7 +14,6 @@ namespace SalesWinApp
 {
     public partial class frmMain : Form
     {
-
         private Member user;
         private frmLogin frmLogin;
         public frmMain(Member member, frmLogin frmLogin)
@@ -26,16 +25,18 @@ namespace SalesWinApp
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            if(user is Admin)
+            if (user is Admin)
             {
                 memberManagement.Visible = true;
                 productManagement.Visible = true;
                 myProfile.Visible = false;
                 frmMembers1.Show();
+                frmMembers1.load();
                 frmOrders1.Hide();
                 frmProducts1.Hide();
                 frmProfile1.Hide();
-            } else
+            }
+            else
             {
                 memberManagement.Visible = false;
                 productManagement.Visible = false;
@@ -45,12 +46,15 @@ namespace SalesWinApp
                 frmProducts1.Hide();
                 frmProfile1.Show();
                 frmProfile1.setMember(user);
+                frmProfile1.load();
             }
         }
 
         private void memberManagement_Click(object sender, EventArgs e)
         {
             frmMembers1.Show();
+            frmMembers1.load();
+            frmMembers1.load();
             frmOrders1.Hide();
             frmProducts1.Hide();
         }
@@ -60,6 +64,7 @@ namespace SalesWinApp
             frmMembers1.Hide();
             frmOrders1.Hide();
             frmProducts1.Show();
+            frmProducts1.load();
         }
 
         private void orderManagement_Click(object sender, EventArgs e)
@@ -68,12 +73,15 @@ namespace SalesWinApp
             {
                 frmMembers1.Hide();
                 frmOrders1.Show();
+                frmOrders1.load();
                 frmProducts1.Hide();
-                
-            } else
+
+            }
+            else
             {
                 frmProfile1.Hide();
                 frmOrders1.Show();
+                frmOrders1.load();
             }
 
             frmOrders1.setMember(user);
@@ -83,6 +91,7 @@ namespace SalesWinApp
         {
             frmProfile1.setMember(user);
             frmProfile1.Show();
+            frmProfile1.load();
             frmOrders1.Hide();
         }
 

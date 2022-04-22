@@ -144,7 +144,7 @@ namespace SalesWinApp
             e.Cancel = false;
         }
 
-        private void frmProfile_Load(object sender, EventArgs e)
+        public void load()
         {
             if (member != null)
             {

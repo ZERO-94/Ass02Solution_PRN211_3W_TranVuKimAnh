@@ -140,8 +140,6 @@
             this.Controls.Add(this.orderDataGrid);
             this.Name = "frmOrders";
             this.Size = new System.Drawing.Size(776, 411);
-            this.Load += new System.EventHandler(this.frmOrders_Load);
-            this.VisibleChanged += new System.EventHandler(this.frmOrders_Load);
             ((System.ComponentModel.ISupportInitialize)(this.orderDataGrid)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

@@ -93,7 +93,6 @@
             this.updateProfile.TabIndex = 7;
             this.updateProfile.Text = "update";
             this.updateProfile.UseVisualStyleBackColor = true;
-            this.updateProfile.VisibleChanged += new System.EventHandler(this.frmProfile_Load);
             this.updateProfile.Click += new System.EventHandler(this.btnOK_Click);
             // 
             // label1
@@ -173,7 +172,6 @@
             this.Controls.Add(this.tbEmail);
             this.Name = "frmProfile";
             this.Size = new System.Drawing.Size(776, 411);
-            this.Load += new System.EventHandler(this.frmProfile_Load);
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
