@@ -183,6 +183,7 @@ namespace SalesWinApp
                 dtpOrderDate.Value = order.OrderDate;
                 dtpRequiredDate.Value = (DateTime)order.RequiredDate;
                 dtpShippedDate.Value = (DateTime)order.ShippedDate;
+                tbFreight.Text = order.Freight.ToString();
 
                 //load order detail
                 LoadTable();
@@ -257,7 +258,7 @@ namespace SalesWinApp
         {
             try
             {
-                int updateId = (int)orderDetailDataGrid.Rows[orderDetailDataGrid.CurrentCell.RowIndex].Cells[1].Value;
+                int updateId = int.Parse(orderDetailDataGrid.Rows[orderDetailDataGrid.CurrentCell.RowIndex].Cells[0].Value.ToString());
 
                 if (updateId != null)
                 {

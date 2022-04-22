@@ -54,7 +54,6 @@ namespace SalesWinApp
         {
             frmMembers1.Show();
             frmMembers1.load();
-            frmMembers1.load();
             frmOrders1.Hide();
             frmProducts1.Hide();
         }

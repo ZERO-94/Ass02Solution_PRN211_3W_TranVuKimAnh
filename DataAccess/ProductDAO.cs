@@ -22,6 +22,8 @@ namespace DataAccess
 
         public bool CreateProduct(Product newProduct)
         {
+            using (context = new AssignmentPRN211DBContext())
+            {
                 try
                 {
                     context.Products.Add(newProduct);
@@ -36,13 +38,16 @@ namespace DataAccess
                 {
                     return false;
                 }
+            }
         }
 
         public bool DeleteProduct(int id)
         {
+            using (context = new AssignmentPRN211DBContext())
+            {
                 try
                 {
-                    context.Products.Remove(GetProductById(id));
+                    context.Products.Remove(context.Products.SingleOrDefault(p => p.ProductId == id));
                     context.SaveChanges();
                     return true;
                 }
@@ -54,10 +59,13 @@ namespace DataAccess
                 {
                     return false;
                 }
+            }
         }
 
         public bool UpdateProduct(int id, Product updatedProductInfo)
         {
+            using (context = new AssignmentPRN211DBContext())
+            {
                 try
                 {
                     context.Products.Update(updatedProductInfo);
@@ -72,25 +80,36 @@ namespace DataAccess
                 {
                     return false;
                 }
+            }
         }
 
         public Product GetProductById(int id)
         {
-                return context.Products.SingleOrDefault<Product>((m) => m.ProductId == id);
+            using (context = new AssignmentPRN211DBContext())
+            {
+                return context.Products.AsNoTracking().SingleOrDefault<Product>((m) => m.ProductId == id);
+            }
         }
 
         public List<Product> GetAllProducts()
         {
+            using(context = new AssignmentPRN211DBContext())
+            {
                 return context.Products.ToList<Product>();
+            }
+                
         }
 
         public List<Product> SearchProduct(int? searchId, string? searchName, decimal? searchPrice, int? searchInStock)
         {
+            using (context = new AssignmentPRN211DBContext())
+            {
                 return context.Products.Where(product => searchId == null || product.ProductId == searchId)
                 .Where(product => searchName == null || product.ProductName.Contains(searchName))
                 .Where(product => searchPrice == null || product.UnitPrice == searchPrice)
                 .Where(product => searchInStock == null || product.UnitsInStock == searchInStock)
                 .ToList();
+            }
         }
     }
 }

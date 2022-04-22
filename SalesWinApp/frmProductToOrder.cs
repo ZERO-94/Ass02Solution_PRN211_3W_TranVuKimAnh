@@ -49,8 +49,7 @@ namespace SalesWinApp
                 }
                 else if (operationType.Equals("update"))
                 {
-                    orderDetail.ProductId = int.Parse(cbProduct.SelectedValue.ToString());
-                    orderDetail.UnitPrice = productList.Find(p => p.ProductId == int.Parse(cbProduct.SelectedValue.ToString())).UnitPrice;
+                    orderDetail.Product.UnitsInStock += orderDetail.Quantity - int.Parse(tbQuantity.Text);
                     orderDetail.Quantity = int.Parse(tbQuantity.Text);
                     orderDetail.Discount = double.Parse(tbDiscount.Text);
 
@@ -76,16 +75,23 @@ namespace SalesWinApp
                 inOrderProduct.Add(detail.ProductId);
             } 
 
-            //load combo box
-            cbProduct.DataSource = productList.Where(p => !inOrderProduct.Contains(p.ProductId)).ToList();
-            cbProduct.DisplayMember = "ProductName";
-            cbProduct.ValueMember = "ProductId";
-
             if(operationType.Equals("update"))
             {
+                cbProduct.DataSource = productList.Where(p => p.ProductId == orderDetail.ProductId || !inOrderProduct.Contains(p.ProductId)).ToList();
+                cbProduct.DisplayMember = "ProductName";
+                cbProduct.ValueMember = "ProductId";
+
                 cbProduct.SelectedValue = orderDetail.ProductId;
+                cbProduct.Enabled = false;
                 tbDiscount.Text = orderDetail.Discount.ToString();
                 tbQuantity.Text = orderDetail.Quantity.ToString();
+            } else
+            {
+                cbProduct.DataSource = productList.Where(p => !inOrderProduct.Contains(p.ProductId)).ToList();
+                cbProduct.DisplayMember = "ProductName";
+                cbProduct.ValueMember = "ProductId";
+
+                cbProduct.Enabled = true;
             }
         }
 

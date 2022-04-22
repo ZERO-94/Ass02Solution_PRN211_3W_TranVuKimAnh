@@ -21,11 +21,17 @@ namespace DataAccess
 
         public List<Category> GetAllCategories()
         {
+            using (context = new AssignmentPRN211DBContext())
+            {
                 return context.Categories.ToList();
+            }
         }
 
         public Category GetCategoryById(int id) {
+            using (context = new AssignmentPRN211DBContext())
+            {
                 return context.Categories.SingleOrDefault(c => c.CategoryId == id);
+            }
         }
     }
 }

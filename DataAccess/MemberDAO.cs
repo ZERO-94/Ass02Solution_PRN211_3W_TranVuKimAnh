@@ -26,6 +26,8 @@ namespace DataAccess
 
         public bool CreateMember(Member newMember)
         {
+            using (context = new AssignmentPRN211DBContext())
+            {
                 try
                 {
                     context.Members.Add(newMember);
@@ -40,13 +42,16 @@ namespace DataAccess
                 {
                     return false;
                 }
+            }
         }
 
         public bool DeleteMember(int id)
         {
+            using (context = new AssignmentPRN211DBContext())
+            {
                 try
                 {
-                    Member deleteMember = GetMemberById(id);
+                    Member deleteMember = context.Members.SingleOrDefault(m => m.MemberId == id);
                     if (deleteMember != null)
                     {
                         context.Members.Remove(deleteMember);
@@ -66,23 +71,18 @@ namespace DataAccess
                 {
                     return false;
                 }
+            }
         }
 
         public bool UpdateMember(int id, Member updatedMemberInfo)
         {
+            using (context = new AssignmentPRN211DBContext())
+            {
                 try
                 {
-                    Member updateMember = GetMemberById(id);
-                    if (updateMember != null)
-                    {
-                        context.Members.Update(updatedMemberInfo);
-                        context.SaveChanges();
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
+                    context.Members.Update(updatedMemberInfo);
+                    context.SaveChanges();
+                    return true;
                 }
                 catch (DbUpdateConcurrencyException ex)
                 {
@@ -92,13 +92,16 @@ namespace DataAccess
                 {
                     return false;
                 }
+            }
         }
 
         public bool ChangePassword(int id, string oldPassword, string newPassword)
         {
+            using (context = new AssignmentPRN211DBContext())
+            {
                 try
                 {
-                    Member updateMember = GetMemberById(id);
+                    Member updateMember = context.Members.SingleOrDefault(m => m.MemberId == id);
                     if (updateMember != null && updateMember.Password.Equals(oldPassword))
                     {
                         updateMember.Password = newPassword;
@@ -119,20 +122,28 @@ namespace DataAccess
                 {
                     return false;
                 }
+            }
         }
 
         public Member GetMemberById(int id)
         {
+            using (context = new AssignmentPRN211DBContext())
+            {
                 return context.Members.SingleOrDefault<Member>((m) => m.MemberId == id);
+            }
         }
 
         public List<Member> GetAllMembers()
         {
+            using (context = new AssignmentPRN211DBContext())
+            {
                 return context.Members.ToList<Member>();
+            }
         }
 
         public Member CheckLogin(string email, string password) {
-            
+            using (context = new AssignmentPRN211DBContext())
+            {
                 //get default account
                 using StreamReader streamReader = new StreamReader(Directory.GetCurrentDirectory() + @"\appsettings.json");
                 string json = streamReader.ReadToEnd();
@@ -144,7 +155,7 @@ namespace DataAccess
                 }
 
                 return context.Members.SingleOrDefault<Member>(m => m.Email.Equals(email) && m.Password.Equals(password));
-
+            }
         }
     }
 }
