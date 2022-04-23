@@ -10,7 +10,7 @@ namespace BusinessObject
     public class SaleReport
     {
 
-        public List<dynamic> soldProductList { get; set; }
+        public List<ProductForReport> soldProductList { get; set; }
 
         public decimal Income;
     }

@@ -78,6 +78,11 @@ namespace SalesWinApp
                     e.Cancel = true;
                     errorProvider1.SetError(tbId, "Id must be number!");
                 }
+                else if (int.Parse(tbId.Text.Trim()) <= 0)
+                {
+                    e.Cancel = true;
+                    errorProvider1.SetError(tbId, "Id must be positive number!");
+                }
                 else if (memberRepository.GetMemberById(int.Parse(tbId.Text.Trim())) != null)
                 {
                     e.Cancel = true;
@@ -111,6 +116,10 @@ namespace SalesWinApp
             {
                 e.Cancel = true;
                 errorProvider1.SetError(tbEmail, "Email can't be blank!");
+            } else if(!tbEmail.Text.Trim().Equals(member.Email) && memberRepository.GetMemberByEmail(tbEmail.Text.Trim()) != null)
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(tbEmail, "Email already exists!");
             }
             else
             {

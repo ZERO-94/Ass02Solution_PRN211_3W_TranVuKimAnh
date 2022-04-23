@@ -82,6 +82,11 @@ namespace SalesWinApp
                     e.Cancel = true;
                     errorProvider1.SetError(tbId, "Id must be number!");
                 }
+                else if (int.Parse(tbId.Text.Trim()) <= 0)
+                {
+                    e.Cancel = true;
+                    errorProvider1.SetError(tbId, "Id must be positive number!");
+                }
                 else if (orderRepository.GetOrderById(int.Parse(tbId.Text.Trim())) != null)
                 {
                     e.Cancel = true;
@@ -97,24 +102,26 @@ namespace SalesWinApp
 
         private void tbFreight_Validating(object sender, CancelEventArgs e)
         {
-            if (operationType.Equals("create"))
+            decimal result;
+            if (string.IsNullOrWhiteSpace(tbFreight.Text.Trim()))
             {
-                decimal result;
-                if (string.IsNullOrWhiteSpace(tbId.Text.Trim()))
-                {
-                    e.Cancel = true;
-                    errorProvider1.SetError(tbId, "Freight can't be blank!");
-                }
-                else if (!decimal.TryParse(tbId.Text.Trim(), out result))
-                {
-                    e.Cancel = true;
-                    errorProvider1.SetError(tbId, "Freight must be number!");
-                }
-                else
-                {
-                    e.Cancel = false;
-                    errorProvider1.SetError(tbId, null);
-                }
+                e.Cancel = true;
+                errorProvider1.SetError(tbFreight, "Freight can't be blank!");
+            }
+            else if (!decimal.TryParse(tbFreight.Text.Trim(), out result))
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(tbFreight, "Freight must be number!");
+            }
+            else if (decimal.Parse(tbFreight.Text.Trim()) < 0)
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(tbFreight, "Id must not be negative number!");
+            }
+            else
+            {
+                e.Cancel = false;
+                errorProvider1.SetError(tbFreight, null);
             }
         }
 
@@ -184,9 +191,9 @@ namespace SalesWinApp
                 dtpRequiredDate.Value = (DateTime)order.RequiredDate;
                 dtpShippedDate.Value = (DateTime)order.ShippedDate;
                 tbFreight.Text = order.Freight.ToString();
-                updateProduct.Hide();
-                addProduct.Hide();
-                removeProduct.Hide();
+                //updateProduct.Hide();
+                //addProduct.Hide();
+                //removeProduct.Hide();
 
                 //load order detail
                 LoadTable();
@@ -220,7 +227,7 @@ namespace SalesWinApp
         {
             try
             {
-                int deleteId = (int)orderDetailDataGrid.Rows[orderDetailDataGrid.CurrentCell.RowIndex].Cells[1].Value;
+                int deleteId = (int)orderDetailDataGrid.Rows[orderDetailDataGrid.CurrentCell.RowIndex].Cells[0].Value;
 
                 if (deleteId != null)
                 {

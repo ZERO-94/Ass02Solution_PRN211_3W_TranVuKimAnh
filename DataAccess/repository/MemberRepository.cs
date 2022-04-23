@@ -29,6 +29,8 @@ namespace DataAccess.repository
 
         public Member GetMemberById(int id) => daoInstance.GetMemberById(id);
 
+        public Member GetMemberByEmail(string email) => daoInstance.GetMemberByEmail(email);
+
         public bool UpdateMember(int id, Member member) => daoInstance.UpdateMember(id, member);
     }
 }

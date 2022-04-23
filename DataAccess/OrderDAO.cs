@@ -151,7 +151,7 @@ namespace DataAccess
 
                 List<Order> soldOrder = context.Orders.Include(order => order.OrderDetails).ThenInclude(orderDetail => orderDetail.Product).Where<Order>((m) => m.OrderDate >= startDate && m.OrderDate <= endDate).ToList();
 
-                List<dynamic> products = new List<dynamic>();
+                List<ProductForReport> products = new List<ProductForReport>();
 
                 foreach (Order order in soldOrder)
                 {
@@ -159,10 +159,10 @@ namespace DataAccess
                     {
                         if (products.SingleOrDefault(p => p.ProductId == detail.ProductId) != null)
                         {
-                            dynamic product = products.SingleOrDefault(p => p.ProductId == detail.ProductId);
+                            ProductForReport product = products.SingleOrDefault(p => p.ProductId == detail.ProductId);
                             
 
-                            dynamic newProduct = new
+                            ProductForReport newProduct = new ProductForReport()
                             {
                                 ProductId = detail.ProductId,
                                 ProductName = detail.Product.ProductName,
@@ -177,14 +177,15 @@ namespace DataAccess
                         }
                         else
                         {
-                            dynamic product = new
+                            ProductForReport newProduct = new ProductForReport()
                             {
                                 ProductId = detail.ProductId,
                                 ProductName = detail.Product.ProductName,
                                 UnitPrice = detail.UnitPrice,
                                 SoldAmount = detail.Quantity
                             };
-                            products.Add(product);
+
+                            products.Add(newProduct);
 
                             saleReport.Income += detail.Quantity * detail.UnitPrice;
                         }

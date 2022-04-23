@@ -36,12 +36,16 @@ namespace SalesWinApp
 
                 if (operationType.Equals("create"))
                 {
+
+                    productList.Find(p => p.ProductId == int.Parse(cbProduct.SelectedValue.ToString())).UnitsInStock += orderDetail.Quantity - int.Parse(tbQuantity.Text);
+
                     OrderDetail newOrderDetail = new OrderDetail()
                     {
                         ProductId = int.Parse(cbProduct.SelectedValue.ToString()),
                         UnitPrice = productList.Find(p => p.ProductId == int.Parse(cbProduct.SelectedValue.ToString())).UnitPrice,
                         Quantity = int.Parse(tbQuantity.Text),
-                        Discount = double.Parse(tbDiscount.Text)
+                        Discount = double.Parse(tbDiscount.Text),
+                        Product = productList.Find(p => p.ProductId == int.Parse(cbProduct.SelectedValue.ToString()))
                     };
 
                     return newOrderDetail;
@@ -87,6 +91,8 @@ namespace SalesWinApp
                 tbQuantity.Text = orderDetail.Quantity.ToString();
             } else
             {
+                orderDetail = new OrderDetail();
+
                 cbProduct.DataSource = productList.Where(p => !inOrderProduct.Contains(p.ProductId)).ToList();
                 cbProduct.DisplayMember = "ProductName";
                 cbProduct.ValueMember = "ProductId";
@@ -97,9 +103,7 @@ namespace SalesWinApp
 
         private void tbQuantity_Validating(object sender, CancelEventArgs e)
         {
-
             int result;
-
             if(string.IsNullOrWhiteSpace(tbQuantity.Text.Trim()))
             {
                 e.Cancel = true;
@@ -109,7 +113,12 @@ namespace SalesWinApp
                 e.Cancel = true;
                 errorProvider1.SetError(tbQuantity, "Quantity must be integer");
             }
-            else if (productList.Find(p => p.ProductId == int.Parse(cbProduct.SelectedValue.ToString())).UnitsInStock == int.Parse(tbQuantity.Text.Trim()))
+            else if (int.Parse(tbQuantity.Text.Trim()) <= 0)
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(tbQuantity, "Quantity must be positive number!");
+            }
+            else if (productList.Find(p => p.ProductId == int.Parse(cbProduct.SelectedValue.ToString())).UnitsInStock < int.Parse(tbQuantity.Text.Trim()) - orderDetail.Quantity)
             {
                 e.Cancel = true;
                 errorProvider1.SetError(tbQuantity, $"Only {productList.Find(p => p.ProductId == int.Parse(cbProduct.SelectedValue.ToString())).UnitsInStock} left!");
@@ -134,6 +143,11 @@ namespace SalesWinApp
             {
                 e.Cancel = true;
                 errorProvider1.SetError(tbDiscount, "Quantity must be integer");
+            }
+            else if (decimal.Parse(tbDiscount.Text.Trim()) < 0)
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(tbDiscount, "Quantity must not be negative number!");
             }
             else
             {

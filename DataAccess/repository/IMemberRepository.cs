@@ -22,5 +22,7 @@ namespace DataAccess.repository
         public bool ChangePassword(int id, string oldPassword, string newPassword);
 
         public Member CheckLogin(string email, string password);
+
+        public Member GetMemberByEmail(string email);
     }
 }

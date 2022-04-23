@@ -60,6 +60,11 @@ namespace SalesWinApp
                 e.Cancel = true;
                 errorProvider1.SetError(tbEmail, "Email can't be blank!");
             }
+            else if (!tbEmail.Text.Trim().Equals(member.Email) && memberRepository.GetMemberByEmail(tbEmail.Text.Trim()) != null)
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(tbEmail, "Email already exists!");
+            }
             else
             {
                 e.Cancel = false;

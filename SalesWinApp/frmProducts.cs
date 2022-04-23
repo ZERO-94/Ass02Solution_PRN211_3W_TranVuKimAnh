@@ -129,6 +129,11 @@ namespace SalesWinApp
                 e.Cancel = true;
                 errorProvider1.SetError(tbId, "Id must be number!");
             }
+            else if (tbId.Text.Trim().Length > 0 && int.Parse(tbId.Text.Trim()) <= 0)
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(tbId, "Id must be positive number!");
+            }
             else
             {
                 e.Cancel = false;
@@ -143,6 +148,11 @@ namespace SalesWinApp
             {
                 e.Cancel = true;
                 errorProvider1.SetError(tbUnitPrice, "Unit Price must be decimal!");
+            }
+            else if (tbUnitPrice.Text.Trim().Length > 0 && decimal.Parse(tbUnitPrice.Text.Trim()) < 0)
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(tbUnitPrice, "Unit Price must not be negative number!");
             }
             else
             {
@@ -159,6 +169,11 @@ namespace SalesWinApp
             {
                 e.Cancel = true;
                 errorProvider1.SetError(tbUnitInStock, "Unit in Stock must be integer!");
+            }
+            else if (tbUnitInStock.Text.Trim().Length > 0 && int.Parse(tbUnitInStock.Text.Trim()) < 0)
+            {
+                e.Cancel = true;
+                errorProvider1.SetError(tbUnitInStock, "Unit In Stock must not be negative number!");
             }
             else
             {

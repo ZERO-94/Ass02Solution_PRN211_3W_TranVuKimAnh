@@ -51,6 +51,7 @@
             // 
             this.tbPassword.Location = new System.Drawing.Point(240, 251);
             this.tbPassword.Name = "tbPassword";
+            this.tbPassword.PasswordChar = '*';
             this.tbPassword.Size = new System.Drawing.Size(290, 23);
             this.tbPassword.TabIndex = 1;
             this.tbPassword.Validating += new System.ComponentModel.CancelEventHandler(this.tbPassword_Validating);

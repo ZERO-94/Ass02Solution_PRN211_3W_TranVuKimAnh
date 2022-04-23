@@ -133,6 +133,14 @@ namespace DataAccess
             }
         }
 
+        public Member GetMemberByEmail(string email)
+        {
+            using (context = new AssignmentPRN211DBContext())
+            {
+                return context.Members.SingleOrDefault<Member>((m) => m.Email.Equals(email));
+            }
+        }
+
         public List<Member> GetAllMembers()
         {
             using (context = new AssignmentPRN211DBContext())
